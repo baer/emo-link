@@ -1,1 +1,3 @@
-A very ridiculous URL shortener
+# EmoShort
+
+A very silly collision-free, emoji-based, URL shortener built for David Howell Evans
