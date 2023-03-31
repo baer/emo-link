@@ -26,6 +26,11 @@ Okay, so a few things are going on here:
 
    But you can do better. Typically, nobody uses a UUID because they are too long. A UUID string is 32 hexadecimal chars. You can base62 encode it, which is URL-safe, but that only brings it down to 22. BUT(!), if you increase the alphabet from 62 ASCII chars to all 4500 emojis, you only need 11!
 
+3. **Base N Encoding**
+   1. Convert UUID to bin
+   2. Group by M bits, where M is enough to encode N values. It's 12.
+   3. For each 12-bit grouping: `Emojis[parseInt(binaryNumber, 2)]`
+
 #### Why would I do this?
 
 Well, one answer might be that an interviewer asked how you could write a collision-free, client-side-only, central-databaseless URL shortener. A better answer is that it can be run at the edge, or even in the client, without any centralized service, distributed consensus, or specific DB capability. Also, because Emoji is just better than ASCII.
