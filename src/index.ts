@@ -1,4 +1,4 @@
-import { encodeUUIDAsEmoji, generateURISafeEmojiUUID } from "./emoji-id";
+import { encodeUUIDAsEmoji } from "./emoji-id";
 
 export interface Env {
   EMO_LINK: KVNamespace;
@@ -34,7 +34,9 @@ export default {
       });
     }
 
-    const redirectURL = await env.EMO_LINK.get(pathname);
+    const key = decodeURIComponent(pathname);
+    const redirectURL = await env.EMO_LINK.get(key);
+
     if (!redirectURL) {
       return new Response(`📯 😢 Womp womp: '${pathname}' was not found.`, {
         status: 404,

@@ -1,6 +1,8 @@
 # EmoShort
 
-A very silly collision-free, emoji-based URL shortener built for David Howell Evans
+A very silly collision-free, emoji-based URL shortener built for David Howell Evans.
+
+https://emo-short.lmkif.workers.dev/😻👩🏿‍🤝‍👨🏾👃🏾🛴👩🏾‍🎨🏍️🤷🏻‍♀🧑🏻‍🎨🧹🚚✋🏽
 
 ## FAQ
 
