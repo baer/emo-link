@@ -1,5 +1,5 @@
 {
-  "name": "emo-short",
+  "name": "emo-link",
   "version": "0.0.0",
   "devDependencies": {
     "@cloudflare/workers-types": "4.20230321.0",

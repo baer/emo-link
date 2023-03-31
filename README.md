@@ -2,7 +2,7 @@
 
 A very silly collision-free, emoji-based URL shortener built for David Howell Evans.
 
-https://emo-short.lmkif.workers.dev/😻👩🏿‍🤝‍👨🏾👃🏾🛴👩🏾‍🎨🏍️🤷🏻‍♀🧑🏻‍🎨🧹🚚✋🏽
+https://emo-link.lmkif.workers.dev/😻👩🏿‍🤝‍👨🏾👃🏾🛴👩🏾‍🎨🏍️🤷🏻‍♀🧑🏻‍🎨🧹🚚✋🏽
 
 ## FAQ
 
