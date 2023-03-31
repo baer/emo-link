@@ -1,0 +1,3 @@
+name = "emo-short"
+main = "src/index.ts"
+compatibility_date = "2023-03-31"
