@@ -20,7 +20,7 @@ export default {
 
       const html = `<!DOCTYPE html>
         <body>
-          <h1>EmoShort</h1>
+          <h1>EmoLink</h1>
           <p>UUID: ${uuid}</p>
           <p>Emoji: ${uuidAsEmoji}</p>
           <p>URI Encoded: ${uriEncodedEmojiUUID}</p>
