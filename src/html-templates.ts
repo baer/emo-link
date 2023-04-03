@@ -31,24 +31,10 @@ export function getHomePage(siteKey: string) {
             margin: auto;
           }
 
-          .form-signin .checkbox {
-            font-weight: 400;
-          }
-
-          .form-signin .form-floating:focus-within {
-            z-index: 2;
-          }
-
           .form-signin input[type="text"] {
             margin-bottom: -1px;
             border-bottom-right-radius: 0;
             border-bottom-left-radius: 0;
-          }
-
-          .form-signin input[type="password"] {
-            margin-bottom: 10px;
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
           }
         </style>
       </head>
@@ -72,6 +58,8 @@ export function getHomePage(siteKey: string) {
           </div>
         
           <button onClick="(() => { handleSubmitURL() })()">Submit</button>
+
+          <div id="result" />
         </main>
       </body>
       <script>
@@ -79,6 +67,7 @@ export function getHomePage(siteKey: string) {
           const url = "/api/link";
           const formData = new FormData();
           formData.append("cf-turnstile-response", turnstile.getResponse());
+          formData.append("url", document.getElementById('url').value);
         
           try {
             const result = await fetch(url, {
@@ -86,6 +75,8 @@ export function getHomePage(siteKey: string) {
               method: "POST",
             });
             const data = await result.json();
+            console.log(data)
+            document.getElementById('result').innerHTML = \`<a href='\${data.key}'>\${window.location.origin}\${data.key}</a>\`
           } catch (err) {
             console.error(err);
           }

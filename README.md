@@ -4,6 +4,8 @@ A very silly collision-free, emoji-based URL shortener built for David Howell Ev
 
 https://emo-link.lmkif.workers.dev/😻👩🏿‍🤝‍👨🏾👃🏾🛴👩🏾‍🎨🏍️🤷🏻‍♀🧑🏻‍🎨🧹🚚✋🏽
 
+> **_NOTE:_** This code is a mess. I'm literally using raw HTML in a Worker. My HTML is in a template string. I'm maniulating the DOM with `.innerHTML`. Once I have proper DoS and anti-bot measures in place, (Cloudflare Turnstile / WAF working), I'll turn my attention to styles, frameworks, and clearn code :).
+
 ## FAQ
 
 #### Does this work?
