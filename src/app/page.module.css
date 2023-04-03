@@ -1,0 +1,39 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6rem;
+  min-height: 100vh;
+}
+
+.result {
+  margin-top: 30px;
+}
+
+/* Enable hover only on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  /* TODO */
+}
+
+@media (prefers-reduced-motion) {
+  /* TODO */
+}
+
+/* Mobile and Tablet */
+@media (max-width: 1023px) {
+  /* TODO */
+}
+
+@media (prefers-color-scheme: dark) {
+  /* TODO */
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
