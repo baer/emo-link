@@ -2,7 +2,7 @@
 
 A very silly collision-free, emoji-based URL shortener built for David Howell Evans.
 
-https://emo-link.lmkif.workers.dev/😻👩🏿‍🤝‍👨🏾👃🏾🛴👩🏾‍🎨🏍️🤷🏻‍♀🧑🏻‍🎨🧹🚚✋🏽
+// https://emol.ink/😻👩🏿‍🤝‍👨🏾👃🏾🛴👩🏾‍🎨🏍️🤷🏻‍♀🧑🏻‍🎨🧹🚚✋🏽
 
 > **_NOTE:_** This code is a bit of a mess. But, before I open up a KVStore to the Internet, I'm focused on getting CF Pages set up with proper DoS (Cloudflare WAF) and anti-bot measures (Cloudflare Turnstile). So, I'll circle back to styles and clean code shortly :).
 

@@ -15,30 +15,43 @@ interface Env {
   TURNSTILE_SECRET: string;
 }
 
-export const onRequestPost: PagesFunction<Env> = async (
-  context
-): Promise<Response> => {
-  const body = (await context.request.json()) as { token: string; url: string };
-  const token = body.token;
-
-  let userURL;
+function validateURL(url: string) {
   try {
-    userURL = new URL(body.url);
+    new URL(url);
+    return true;
   } catch (error) {
-    return errorResponse(ErrorCodes.INVALID_URL);
+    return false;
   }
+}
 
-  const SECRET = context.env.TURNSTILE_SECRET || TURNSTILE_DEMO_SECRETS["pass"];
-
-  const outcome = (await fetch(VERIFY_TURNSTILE_TOKEN_ENDPOINT, {
+async function validateTurnstileToken(
+  secret: string,
+  token: string
+): Promise<boolean> {
+  const response = await fetch(VERIFY_TURNSTILE_TOKEN_ENDPOINT, {
     method: "POST",
-    body: `secret=${encodeURIComponent(SECRET)}&response=${encodeURIComponent(
+    body: `secret=${encodeURIComponent(secret)}&response=${encodeURIComponent(
       token
     )}`,
     headers: { "content-type": "application/x-www-form-urlencoded" },
-  }).then((res) => res.json())) as JSONObject;
+  });
+  const outcome = (await response.json()) as JSONObject;
 
-  if (!outcome.success) {
+  return !!outcome.success;
+}
+
+export const onRequestPost: PagesFunction<Env> = async (
+  context
+): Promise<Response> => {
+  const { token, url }: { token: string; url: string } =
+    await context.request.json();
+
+  if (!validateURL(url)) {
+    return errorResponse(ErrorCodes.INVALID_URL);
+  }
+
+  const secret = context.env.TURNSTILE_SECRET || TURNSTILE_DEMO_SECRETS["pass"];
+  if (!(await validateTurnstileToken(secret, token))) {
     return errorResponse(ErrorCodes.INVALID_TURNSTILE_TOKEN);
   }
 
@@ -50,7 +63,7 @@ export const onRequestPost: PagesFunction<Env> = async (
   // "This method returns a Promise that you should await on in order to verify
   // a successful update."
   // https://developers.cloudflare.com/workers/runtime-apis/kv/
-  await context.env.EMO_LINK.put(key, userURL.href);
+  await context.env.EMO_LINK.put(key, url);
 
   return jsonResponse({
     data: {

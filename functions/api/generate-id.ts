@@ -1,3 +1,4 @@
+import { jsonResponse } from "../../src/server/response";
 import { encodeUUIDAsEmoji } from "../../src/server/emoji-id";
 
 interface Env {
@@ -11,18 +12,12 @@ export const onRequest: PagesFunction<Env> = async (
   const uuidAsEmoji = encodeUUIDAsEmoji(uuid);
   const uriEncodedEmojiUUID = encodeURIComponent(uuidAsEmoji);
 
-  const json = JSON.stringify(
-    {
+  return jsonResponse({
+    data: {
       uuid,
       uuidAsEmoji,
       uriEncodedEmojiUUID,
     },
-    null,
-    2
-  );
-  return new Response(json, {
-    headers: {
-      "content-type": "application/json;charset=UTF-8",
-    },
+    prettyPrint: true,
   });
 };
