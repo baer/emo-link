@@ -5,13 +5,13 @@ import styles from "./page.module.css";
 import { useRef, useState } from "react";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { WidgetStatus, JSONObject } from "../types";
-import { TURNSTILE_SITEKEY } from "../constants";
+import { TURNSTILE_SITEKEYS, CREATE_LINK_ENDPOINT } from "../constants";
 
-// Can be changed to pass, fail, interactive, and production
 const siteKey =
   process.env.NODE_ENV === "development"
-    ? TURNSTILE_SITEKEY["pass"]
-    : TURNSTILE_SITEKEY["production"];
+    ? // Can be changed to pass, fail, and interactive
+      TURNSTILE_SITEKEYS["pass"]
+    : TURNSTILE_SITEKEYS["production"];
 
 function getEmojiURL(key: string) {
   return `${location.origin}${key}`;
@@ -32,7 +32,7 @@ export default function Home() {
     setLoading(true);
     setResponse(null);
 
-    const res = await fetch("/api/link", {
+    const res = await fetch(CREATE_LINK_ENDPOINT, {
       method: "POST",
       body: JSON.stringify({ token, url: userURL }),
       headers: { "content-type": "application/json" },

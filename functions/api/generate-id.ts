@@ -1,4 +1,4 @@
-import { encodeUUIDAsEmoji } from "../../src/function-src/emoji-id";
+import { encodeUUIDAsEmoji } from "../../src/server/emoji-id";
 
 interface Env {
   EMO_LINK: KVNamespace;

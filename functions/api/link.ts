@@ -1,11 +1,14 @@
-import { encodeUUIDAsEmoji } from "../../src/function-src/emoji-id";
-import response from "../../src/function-src/response";
+import { encodeUUIDAsEmoji } from "../../src/server/emoji-id";
+import {
+  jsonResponse,
+  errorResponse,
+  ErrorCodes,
+} from "../../src/server/response";
 import { JSONObject } from "../../src/types";
-
-import { TURNSTILE_DEMO_SECRET } from "../../src/constants";
-
-const verifyEndpoint =
-  "https://challenges.cloudflare.com/turnstile/v0/siteverify";
+import {
+  TURNSTILE_DEMO_SECRETS,
+  VERIFY_TURNSTILE_TOKEN_ENDPOINT,
+} from "../../src/constants";
 
 interface Env {
   EMO_LINK: KVNamespace;
@@ -22,19 +25,12 @@ export const onRequestPost: PagesFunction<Env> = async (
   try {
     userURL = new URL(body.url);
   } catch (error) {
-    // TODO: Formalize error codes
-    return response.json(
-      {
-        code: "001",
-        messsge: "Invalid URL",
-      },
-      400
-    );
+    return errorResponse(ErrorCodes.INVALID_URL);
   }
 
-  const SECRET = context.env.TURNSTILE_SECRET || TURNSTILE_DEMO_SECRET["pass"];
+  const SECRET = context.env.TURNSTILE_SECRET || TURNSTILE_DEMO_SECRETS["pass"];
 
-  const outcome = (await fetch(verifyEndpoint, {
+  const outcome = (await fetch(VERIFY_TURNSTILE_TOKEN_ENDPOINT, {
     method: "POST",
     body: `secret=${encodeURIComponent(SECRET)}&response=${encodeURIComponent(
       token
@@ -43,14 +39,7 @@ export const onRequestPost: PagesFunction<Env> = async (
   }).then((res) => res.json())) as JSONObject;
 
   if (!outcome.success) {
-    return response.json(
-      {
-        code: "002",
-        message: "Unable to verify Turnstile token",
-        ...outcome,
-      },
-      400
-    );
+    return errorResponse(ErrorCodes.INVALID_TURNSTILE_TOKEN);
   }
 
   const uuid = crypto.randomUUID();
@@ -63,10 +52,13 @@ export const onRequestPost: PagesFunction<Env> = async (
   // https://developers.cloudflare.com/workers/runtime-apis/kv/
   await context.env.EMO_LINK.put(key, userURL.href);
 
-  return response.json({
-    uuid,
-    uuidAsEmoji,
-    uriEncodedEmojiUUID,
-    key,
+  return jsonResponse({
+    data: {
+      uuid,
+      uuidAsEmoji,
+      uriEncodedEmojiUUID,
+      key,
+    },
+    prettyPrint: true,
   });
 };
