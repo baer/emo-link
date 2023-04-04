@@ -1,7 +1,0 @@
-name = "emo-link"
-main = "src/index.ts"
-compatibility_date = "2023-03-31"
-
-kv_namespaces = [
-  { binding = "EMO_LINK", id = "203f6e04e7c1421c996cfce2d6b90ee5", preview_id = "f1fdedae87bf433cb856af81a057a6bc" }
-]
