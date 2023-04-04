@@ -1,26 +1,25 @@
 {
   "name": "emo-link",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "private": false,
+  "license": "MIT",
   "scripts": {
     "dev": "next",
     "build": "next build",
     "start": "serve out",
     "lint": "next lint"
   },
-  "dependencies": {
-    "@marsidev/react-turnstile": "0.1.2",
-    "@types/node": "18.15.11",
-    "@types/react": "18.0.33",
-    "@types/react-dom": "18.0.11",
-    "eslint": "8.37.0",
-    "eslint-config-next": "13.2.4",
-    "next": "13.2.5-canary.28",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
-  },
   "devDependencies": {
     "@cloudflare/workers-types": "4.20230321.0",
+    "@marsidev/react-turnstile": "0.1.2",
+    "@types/node": "18.15.11",
+    "@types/react-dom": "18.0.11",
+    "@types/react": "18.0.33",
+    "eslint-config-next": "13.2.4",
+    "eslint": "8.37.0",
+    "next": "13.2.5-canary.29",
+    "react-dom": "18.2.0",
+    "react": "18.2.0",
     "serve": "14.2.0",
     "typescript": "5.0.3"
   }
