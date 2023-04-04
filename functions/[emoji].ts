@@ -10,7 +10,7 @@ export const onRequest: PagesFunction<Env> = async (
 
   let key = pathname;
   // Accept IRI or URIEncoded pathname
-  if (!pathname.includes("%")) {
+  if (pathname.includes("%")) {
     key = decodeURIComponent(pathname);
   }
 
