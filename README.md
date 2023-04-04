@@ -4,7 +4,7 @@ A very silly collision-free, emoji-based URL shortener built for David Howell Ev
 
 https://emo-link.lmkif.workers.dev/😻👩🏿‍🤝‍👨🏾👃🏾🛴👩🏾‍🎨🏍️🤷🏻‍♀🧑🏻‍🎨🧹🚚✋🏽
 
-> **_NOTE:_** This code is a mess. I'm literally using raw HTML in a Worker. My HTML is in a template string. I'm maniulating the DOM with `.innerHTML`. Once I have proper DoS and anti-bot measures in place, (Cloudflare Turnstile / WAF working), I'll turn my attention to styles, frameworks, and clearn code :).
+> **_NOTE:_** This code is a bit of a mess. But, before I open up a KVStore to the Internet, I'm focused on getting CF Pages set up with proper DoS (Cloudflare WAF) and anti-bot measures (Cloudflare Turnstile). So, I'll circle back to styles and clean code shortly :).
 
 ## FAQ
 
