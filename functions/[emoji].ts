@@ -13,7 +13,12 @@ export const onRequest: PagesFunction<Env> = async (
   if (!pathname.includes("%")) {
     key = decodeURIComponent(pathname);
   }
+
   const redirectURL = await context.env.EMO_LINK.get(key);
+
+  console.log(pathname);
+  console.log(key);
+  console.log(redirectURL);
 
   if (!redirectURL) {
     return new Response(`📯 😢 Womp womp: '${pathname}' was not found.`, {
