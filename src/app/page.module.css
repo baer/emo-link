@@ -1,39 +1,189 @@
 .main {
+  flex-grow: 1;
+}
+
+.shortened-url-result {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.large-link {
+  font-weight: bold;
+  color: var(--primary-color);
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.large-link:hover {
+  color: var(--primary-color-hovered);
+}
+
+.large-link::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--primary-color);
+  visibility: hidden;
+  transform: scaleX(0);
+  opacity: 0;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.large-link:hover::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  align-items: stretch;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  box-shadow: 0 5px .5rem rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 1200px;
+  margin: auto;
+  min-height: 250px;
+}
+
+.hero-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px 0 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-content {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.turnstile {
+  margin-bottom: 35px;
+}
+
+.form {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6rem;
-  min-height: 100vh;
+  padding: 35px;
+  line-height: 1.5;
+  width: 100%;
 }
 
-.result {
-  margin-top: 30px;
+.input-url {
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 35px;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  /* TODO */
+.input-url:focus-visible {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 5px rgba(var(--primary-color), 0.5);
 }
 
-@media (prefers-reduced-motion) {
-  /* TODO */
+.button-submit {
+  font-size: 1rem;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  background-color: var(--primary-color);
+  cursor: pointer;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease-in-out;
 }
 
-/* Mobile and Tablet */
-@media (max-width: 1023px) {
-  /* TODO */
+.button-submit:hover {
+  background-color: var(--primary-color-hovered);
 }
 
-@media (prefers-color-scheme: dark) {
-  /* TODO */
+.button-submit:focus,
+.button-submit:active {
+  /* TODO: a11y */
 }
 
-@keyframes rotate {
-  from {
-    transform: rotate(360deg);
+.info {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+/**
+ * Visually hide an element, but leave it available for screen readers
+ * @link https://github.com/h5bp/html5-boilerplate/blob/master/dist/css/main.css
+ * @link http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ * @link https://github.com/h5bp/main.css/issues/12#issuecomment-321106995
+ */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+@media screen and (max-width: 1024px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
-  to {
-    transform: rotate(0deg);
+
+  .hero-image {
+    max-height: 300px;
+  }
+
+  .hero-image-wrapper {
+    border-radius: 10px 10px 0 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hero {
+    width: calc(100% - 2rem);
+  }
+
+  .hero-content,
+  .form {
+    padding: .5rem;
+  }
+
+  .input-url,
+  .button-submit {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .shortened-url-result {
+    font-size: 1.25rem;
+  }
+  
+  .hero {
+    border-radius: .5rem;
   }
 }

@@ -46,44 +46,80 @@ export default function Home() {
   }
 
   return (
-    <main className={`${styles.main}`}>
-      <h1>EmoLink</h1>
+    <main role="main">
+      {response && !loading && (
+        <div className={styles["shortened-url-result"]}>
+          <a
+            href={getEmojiURL(response.key as string)}
+            className={styles["large-link"]}
+          >
+            {getEmojiURL(response.key as string)}
+          </a>
+        </div>
+      )}
 
-      <div>
-        <label htmlFor="url">URL</label>
-        <input
-          type="text"
-          id="url"
-          value={userURL}
-          onChange={(event) => {
-            setUserURL(event.target.value);
-          }}
-        />
-
-        <button disabled={!canSubmit || loading} onClick={handleSubmitURL}>
-          {loading ? `Loading...` : `Submit`}
-        </button>
+      <div className={styles.hero}>
+        <div className={styles["hero-image-wrapper"]}>
+          <img
+            src="https://picsum.photos/485/244"
+            alt="stock photo"
+            className={styles["hero-image"]}
+          />
+        </div>
+        <div className={styles["hero-content"]}>
+          <div className={styles.form}>
+            <label
+              id="url-input-label"
+              htmlFor="url"
+              className={styles["visually-hidden"]}
+            >
+              URL to shorten
+            </label>
+            <input
+              className={styles["input-url"]}
+              type="url"
+              id="url"
+              name="url"
+              placeholder="http://www.google.com"
+              aria-describedby="url-input-label"
+              value={userURL}
+              onChange={(event) => {
+                setUserURL(event.target.value);
+              }}
+            />
+            <Turnstile
+              className={styles.turnstile}
+              ref={turnstileRef}
+              siteKey={siteKey}
+              onError={() => setStatus("error")}
+              onExpire={() => setStatus("expired")}
+              onSuccess={(token) => {
+                setToken(token);
+                setStatus("solved");
+              }}
+            />
+            <button
+              aria-label="Shorten URL"
+              className={styles["button-submit"]}
+              onClick={handleSubmitURL}
+              disabled={!canSubmit || loading}
+            >
+              Shorten
+            </button>
+          </div>
+        </div>
       </div>
 
-      <Turnstile
-        ref={turnstileRef}
-        siteKey={siteKey}
-        onError={() => setStatus("error")}
-        onExpire={() => setStatus("expired")}
-        onSuccess={(token) => {
-          setToken(token);
-          setStatus("solved");
-        }}
-      />
-
-      <div>
-        {response && !loading && (
-          <div className="result">
-            <a href={getEmojiURL(response.key as string)} target="_blank">
-              {getEmojiURL(response.key as string)}
-            </a>
-          </div>
-        )}
+      <div className={styles.info}>
+        This is weird. To learn how this works, check out{" "}
+        <a
+          href="https://ericbaer.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          my blog post
+        </a>
+        .
       </div>
     </main>
   );
