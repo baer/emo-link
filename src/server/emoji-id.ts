@@ -1,6 +1,6 @@
-import emojiAlphabet from "./emoji-alphabet";
+import emojiAlphabet from "./emoji-alphabet.json";
 
-// I have 4870 emoji in my alphabet require 11 bits to encode a truncated set
+// I have 4764 emoji in my alphabet require 11 bits to encode a truncated set
 // (4096) or 13 bits for the complete set (8192). I've chosen to use 12 since
 // padding several thousand chars wouldconsiderably complicate the problem for
 // no real benefit
