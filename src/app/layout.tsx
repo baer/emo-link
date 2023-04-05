@@ -16,7 +16,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <header></header>
+        <main role="main">{children}</main>
+        <footer>
+          © {new Date().getFullYear()} Made by{" "}
+          <a href="https://ericbaer.com/">Eric Baer</a> with 🧑‍🔬.
+        </footer>
+      </body>
     </html>
   );
 }

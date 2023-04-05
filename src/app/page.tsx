@@ -13,8 +13,8 @@ const siteKey =
       TURNSTILE_SITEKEYS["pass"]
     : TURNSTILE_SITEKEYS["production"];
 
-function getEmojiURL(key: string) {
-  return `${location.origin}${key}`;
+function getEmojiURL(key: string | null) {
+  return key ?? `${location.origin}${key}`;
 }
 
 export default function Home() {
@@ -25,6 +25,9 @@ export default function Home() {
 
   const [response, setResponse] = useState<JSONObject | null>(null);
   const [loading, setLoading] = useState(false);
+  const showResult = response && !loading;
+  const [isCopied, setIsCopied] = useState(false);
+  const emojiURL = getEmojiURL(response?.key as string);
 
   const turnstileRef = useRef<TurnstileInstance>(null);
 
@@ -44,29 +47,29 @@ export default function Home() {
     setResponse(data);
   }
 
+  function handleClickLink() {
+    navigator.clipboard.writeText(emojiURL);
+    setIsCopied(true);
+  }
+
   return (
-    <main role="main">
-      {response && !loading && (
-        <div className={styles["shortened-url-result"]}>
-          <a
-            href={getEmojiURL(response.key as string)}
-            className={styles["large-link"]}
-          >
-            {getEmojiURL(response.key as string)}
-          </a>
+    <>
+      {showResult && (
+        <div className={styles["short-url"]} onClick={handleClickLink}>
+          {emojiURL}
         </div>
       )}
 
-      <div className={styles.hero}>
-        <div className={styles["hero-image-wrapper"]}>
+      <section className={styles.hero}>
+        <div className={styles["hero__image-container"]}>
           <img
             src="https://picsum.photos/485/244"
             alt="stock photo"
-            className={styles["hero-image"]}
+            className={styles["hero__image"]}
           />
         </div>
-        <div className={styles["hero-content"]}>
-          <div className={styles.form}>
+        <div className={styles["hero__form-container"]}>
+          <div>
             <label
               id="url-input-label"
               htmlFor="url"
@@ -75,19 +78,21 @@ export default function Home() {
               URL to shorten
             </label>
             <input
-              className={styles["input-url"]}
+              className={styles["hero__form-url-input"]}
+              required
               type="url"
               id="url"
               name="url"
-              placeholder="http://www.google.com"
+              placeholder="http://ericbaer.com/"
               aria-describedby="url-input-label"
               value={userURL}
               onChange={(event) => {
                 setUserURL(event.target.value);
               }}
             />
+
             <Turnstile
-              className={styles.turnstile}
+              className={styles["hero__turnstile"]}
               ref={turnstileRef}
               siteKey={siteKey}
               onError={() => setStatus("error")}
@@ -97,29 +102,32 @@ export default function Home() {
                 setStatus("solved");
               }}
             />
+
             <button
               aria-label="Shorten URL"
-              className={styles["button-submit"]}
+              className={styles["hero__form-submit-button"]}
               onClick={handleSubmitURL}
               disabled={!canSubmit || loading}
             >
-              Shorten
+              Submit
             </button>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className={styles.info}>
-        This is weird. To learn how this works, check out{" "}
-        <a
-          href="https://ericbaer.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          my blog post
-        </a>
-        .
-      </div>
-    </main>
+      <article className={styles.info}>
+        <p>
+          To learn how and why this works, check out my{" "}
+          <a
+            href="https://ericbaer.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            blog post
+          </a>
+          .
+        </p>
+      </article>
+    </>
   );
 }

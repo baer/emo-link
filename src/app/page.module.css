@@ -1,185 +1,192 @@
-.main {
-  flex-grow: 1;
-}
-
-.shortened-url-result {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 3rem;
-  text-align: center;
-}
-
-.large-link {
-  font-weight: bold;
-  color: var(--primary-color);
-  text-decoration: none;
-  display: inline-block;
-  position: relative;
-  transition: color 0.3s ease;
-}
-
-.large-link:hover {
-  color: var(--primary-color-hovered);
-}
-
-.large-link::before {
-  content: "";
+/**
+- * Visually hide an element, but leave it available for screen readers
+- * @link https://github.com/h5bp/html5-boilerplate/blob/master/dist/css/main.css
+- * @link http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+- * @link https://github.com/h5bp/main.css/issues/12#issuecomment-321106995
+- */
+.visually-hidden {
   position: absolute;
-  width: 100%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: var(--primary-color);
-  visibility: hidden;
-  transform: scaleX(0);
-  opacity: 0;
-  transition: all 0.3s ease-in-out 0s;
+  width: 1;
+  height: 1;
+  padding: 0;
+  margin: -1;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  display: "inline-block";
 }
 
-.large-link:hover::before {
-  opacity: 1;
-  transform: scaleX(1);
+.short-url {
+  font-size: 0.92rem;
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+  font-family: var(--font-family-mono);
+  font-weight: 700;
+  margin-bottom: 3em;
+  color: var(--secondary-color);
+  text-decoration: none;
+  transition: color var(--transition-duration);
+  border-bottom: var(--border-width) var(--border-style) transparent;
+}
+
+.short-url:hover {
+  color: var(--primary-color);
+  text-decoration: var(--highlight-color) wavy underline;
+}
+
+.short-url:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--highlight-color);
 }
 
 .hero {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  align-items: stretch;
+  flex-direction: column;
+  /* Cloudflare's Turnstile widget is 300px. That's why this is a
+  pixel-based measurement */
+  min-width: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
   background-color: rgba(255, 255, 255, 0.7);
   border-radius: 10px;
-  box-shadow: 0 5px .5rem rgba(0, 0, 0, 0.1);
-  width: 80%;
+  box-shadow: 0 5px 0.5rem rgba(0, 0, 0, 0.1);
   max-width: 1200px;
-  margin: auto;
   min-height: 250px;
 }
 
-.hero-image-wrapper {
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px 0 0 10px;
-  display: flex;
-  align-items: center;
-}
-
-.hero-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-.hero-content {
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 10px;
+.hero__image-container,
+.hero__form-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.turnstile {
-  margin-bottom: 35px;
+.hero__image-container {
+  height: 100%;
+  border-radius: 10px 10px 0 0;
+  flex-basis: 60%;
+  overflow: hidden;
+  position: relative;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  padding: 35px;
-  line-height: 1.5;
+.hero__image {
+  max-width: 100%;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.hero__form-container {
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  flex-basis: 40%;
+}
+
+.hero__turnstile {
+  width: 300px;
+  height: 65px;
+  margin-bottom: 1.875rem;
+  background-color: #ffc600;
+}
+
+.hero__form-url-input {
+  margin-bottom: 1.875rem;
+  border: var(--border-width) var(--border-style) var(--dark-color);
+  background-color: var(--light-color);
+  padding: 0.5rem;
+}
+
+.hero__form-submit-button {
+  border: none;
+  background-color: var(--primary-color);
+  color: var(--light-color);
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color var(--transition-duration),
+    transform var(--transition-duration);
+}
+
+.hero__form-submit-button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+}
+
+.hero__form-submit-button {
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  font-weight: 700;
+}
+
+.hero__form-url-input,
+.hero__form-submit-button {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 1em;
   width: 100%;
 }
 
-.input-url {
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 35px;
-}
-
-.input-url:focus-visible {
-  border-color: var(--primary-color);
+.hero__form-url-input:focus,
+.hero__form-submit-button:focus {
   outline: none;
-  box-shadow: 0 0 5px rgba(var(--primary-color), 0.5);
-}
-
-.button-submit {
-  font-size: 1rem;
-  padding: 10px;
-  border: none;
-  border-radius: 10px;
-  color: #fff;
-  background-color: var(--primary-color);
-  cursor: pointer;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease-in-out;
-}
-
-.button-submit:hover {
-  background-color: var(--primary-color-hovered);
-}
-
-.button-submit:focus,
-.button-submit:active {
-  /* TODO: a11y */
+  box-shadow: 0 0 0 3px var(--highlight-color);
 }
 
 .info {
-  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
   text-align: center;
-  max-width: calc(100% - 2rem);
+  margin-top: 1rem;
 }
 
-/**
- * Visually hide an element, but leave it available for screen readers
- * @link https://github.com/h5bp/html5-boilerplate/blob/master/dist/css/main.css
- * @link http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
- * @link https://github.com/h5bp/main.css/issues/12#issuecomment-321106995
- */
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+.info a {
+  margin: 0;
 }
 
-@media screen and (max-width: 1024px) {
-
+/* Styles for breakpoint-sm (600px and up) */
+@media (min-width: 600px) {
+  .short-url {
+    font-size: 1.5rem;
+  }
+  .hero__form-container {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
+  .info {
+    margin: 3em;
+  }
 }
 
-@media screen and (max-width: 768px) {
+/* Styles for breakpoint-md (900px and up) */
+@media (min-width: 900px) {
   .hero {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    width: calc(100% - 2rem);
+    flex-direction: row;
   }
-
-  .hero-image {
-    max-height: 300px;
+  .short-url {
+    font-size: 2.5rem;
+    margin-bottom: 1em;
   }
-
-  .hero-image-wrapper {
-    border-radius: 10px 10px 0 0;
+  .hero__image-container {
+    border-radius: 10px 0 0 10px;
   }
-
-  .hero-content,
-  .form {
-    padding: .5rem;
+  .hero__form-container {
+    margin: 1rem;
   }
-
-  .input-url,
-  .button-submit {
-    font-size: 14px;
-    padding: 8px;
+  .hero__form-url-input {
+    font-size: 1em;
+  }
+  .info {
+    margin: 2em;
   }
 }
 
-@media screen and (max-width: 480px) {
-  .shortened-url-result {
-    font-size: 1.1rem;
-  }
+/* Styles for breakpoint-lg (1200px and up) */
+@media (min-width: 1200px) {
+  /* Add any styles specific to large devices, if needed */
+}
+
+/* Styles for breakpoint-xl (1536px and up) */
+@media (min-width: 1536px) {
+  /* Add any styles specific to extra-large devices, if needed */
 }
