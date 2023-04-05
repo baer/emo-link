@@ -47,16 +47,16 @@ export default function Home() {
 
   return (
     <main role="main">
-      {response && !loading && (
+      {
         <div className={styles["shortened-url-result"]}>
           <a
-            href={getEmojiURL(response.key as string)}
+            href="emol.ink/😻👩🏿‍🤝‍👨🏾👃🏾🛴👩🏾‍🎨🏍️🤷🏻‍♀🧑🏻‍🎨🧹🚚✋🏽"
             className={styles["large-link"]}
           >
-            {getEmojiURL(response.key as string)}
+            emol.ink/😻👩🏿‍🤝‍👨🏾👃🏾🛴👩🏾‍🎨🏍️🤷🏻‍♀🧑🏻‍🎨🧹🚚✋🏽
           </a>
         </div>
-      )}
+      }
 
       <div className={styles.hero}>
         <div className={styles["hero-image-wrapper"]}>

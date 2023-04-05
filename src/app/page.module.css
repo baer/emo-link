@@ -127,6 +127,7 @@
 .info {
   margin-top: 1.5rem;
   text-align: center;
+  max-width: calc(100% - 2rem);
 }
 
 /**
@@ -147,9 +148,14 @@
 }
 
 @media screen and (max-width: 1024px) {
+
+}
+
+@media screen and (max-width: 768px) {
   .hero {
     grid-template-columns: 1fr;
     gap: 1rem;
+    width: calc(100% - 2rem);
   }
 
   .hero-image {
@@ -158,12 +164,6 @@
 
   .hero-image-wrapper {
     border-radius: 10px 10px 0 0;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .hero {
-    width: calc(100% - 2rem);
   }
 
   .hero-content,
@@ -180,10 +180,6 @@
 
 @media screen and (max-width: 480px) {
   .shortened-url-result {
-    font-size: 1.25rem;
-  }
-  
-  .hero {
-    border-radius: .5rem;
+    font-size: 1.35rem;
   }
 }
