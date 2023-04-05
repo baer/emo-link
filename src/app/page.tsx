@@ -14,7 +14,7 @@ const siteKey =
     : TURNSTILE_SITEKEYS["production"];
 
 function getEmojiURL(key: string) {
-  return `${location.origin}${key}`;
+  return `${location.hostname}${key}`;
 }
 
 export default function Home() {
