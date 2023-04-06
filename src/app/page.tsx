@@ -106,6 +106,8 @@ export default function Home() {
             />
 
             <Turnstile
+              // This doesn't work, but maybe one day it will :)
+              tabIndex={-1}
               className={styles["hero__turnstile"]}
               ref={turnstileRef}
               siteKey={siteKey}
