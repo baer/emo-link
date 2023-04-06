@@ -4,185 +4,274 @@
 - * @link http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
 - * @link https://github.com/h5bp/main.css/issues/12#issuecomment-321106995
 - */
-
 .visually-hidden {
+  /* Positioning */
   position: absolute;
+
+  /* Sizing */
   width: 1;
   height: 1;
   padding: 0;
   margin: -1;
+
+  /* Box model */
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+
+  /* Display */
   display: "inline-block";
 }
 
 .short-url {
+  /* Typography */
   font-size: 0.92rem;
-  text-align: center;
-  width: 100%;
-  display: inline-block;
   font-family: var(--font-family-mono);
   font-weight: 700;
-  margin-bottom: 3em;
+  text-align: center;
   color: var(--secondary-color);
   text-decoration: none;
-  transition: color var(--transition-duration);
+
+  /* Sizing */
+  width: 100%;
+
+  /* Display */
+  display: inline-block;
+
+  /* Spacing */
+  margin-bottom: 3em;
+
+  /* Styling */
   border-bottom: var(--border-width) var(--border-style) transparent;
+
+  /* Transitions */
+  transition: color var(--transition-duration);
 }
 
 .short-url:hover {
+  /* Typography */
   color: var(--primary-color);
   text-decoration: var(--highlight-color) wavy underline;
 }
 
-.short-url:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--highlight-color);
-}
-
 .short-url__copied-indicator {
-  padding: 5px 10px;
-  background-color: #4caf50;
-  color: white;
-  border-radius: 20px;
+  /* Typography */
   font-size: 14px;
+  color: white;
+
+  /* Sizing */
+  padding: 5px 10px;
+
+  /* Styling */
+  background-color: #4caf50;
+  border-radius: 20px;
+
+  /* Visibility */
   opacity: 0;
   visibility: hidden;
+
+  /* Transitions */
   transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease;
 }
 
 .short-url__copied-indicator--visible {
+  /* Visibility */
   opacity: 1;
   visibility: visible;
+
+  /* Animation */
   animation: bouncy 1s ease-out;
 }
 
 @keyframes bouncy {
   0% {
-    transform: translate(0, 0);
+    transform: translateY(0);
   }
   15% {
-    transform: translate(0, -20px);
+    transform: translateY(-20px);
   }
   30% {
-    transform: translate(0, 0);
+    transform: translateY(0);
   }
   45% {
-    transform: translate(0, -10px);
+    transform: translateY(-10px);
   }
   60% {
-    transform: translate(0, 0);
+    transform: translateY(0);
   }
   75% {
-    transform: translate(0, -5px);
+    transform: translateY(-5px);
   }
   100% {
-    transform: translate(0, 0);
+    transform: translateY(0);
   }
 }
 
 .hero {
-  flex-direction: column;
-  /* Cloudflare's Turnstile widget is 300px. That's why this is a
-  pixel-based measurement */
-  min-width: 320px;
+  /* Display */
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  /* Sizing */
+  /* 
+    Cloudflare's Turnstile widget is 300px. That's why this is a pixel-based
+    measurement 
+  */
+  min-width: 320px;
   width: 80%;
+  max-width: 1200px;
+  min-height: 250px;
+
+  /* Styling */
   background-color: rgba(255, 255, 255, 0.7);
   border-radius: 10px;
   box-shadow: 0 5px 0.5rem rgba(0, 0, 0, 0.1);
-  max-width: 1200px;
-  min-height: 250px;
 }
 
 .hero__image-container,
 .hero__form-container {
+  /* Display */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .hero__image-container {
+  /* Sizing */
   height: 100%;
-  border-radius: 10px 10px 0 0;
   flex-basis: 60%;
+
+  /* Styling */
+  border-radius: 10px 10px 0 0;
   overflow: hidden;
+
+  /* Positioning */
   position: relative;
 }
 
 .hero__image {
-  max-width: 100%;
-  object-fit: cover;
+  /* Sizing */
   width: 100%;
   height: 100%;
+  max-width: 100%;
+
+  /* Styling */
+  object-fit: cover;
 }
 
 .hero__form-container {
+  /* Spacing */
   margin-top: 2rem;
   margin-bottom: 1.5rem;
+
+  /* Sizing */
   flex-basis: 40%;
 }
 
 .hero__turnstile {
+  /* Sizing */
   width: 300px;
   height: 65px;
+
+  /* Spacing */
   margin-bottom: 1.875rem;
+
+  /* Styling */
   background-color: #ffc600;
 }
 
 .hero__form-url-input {
+  /* Typography */
+  font-size: 1em;
+
+  /* Sizing */
+  width: 100%;
+
+  /* Spacing */
   margin-bottom: 1.875rem;
-  border: var(--border-width) var(--border-style) var(--dark-color);
+
+  /* Styling */
   background-color: var(--light-color);
+  border: var(--border-width) var(--border-style) var(--dark-color);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  /* Padding */
   padding: 0.5rem;
 }
 
 .hero__form-submit-button {
-  border: none;
-  background-color: var(--primary-color);
-  color: var(--light-color);
-  padding: 0.5rem 1rem;
-  text-transform: uppercase;
+  /* Typography */
   font-weight: bold;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  color: var(--light-color);
+
+  /* Sizing */
+  width: 100%;
+
+  /* Styling */
+  background-color: var(--primary-color);
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  /* Padding */
+  padding: 0.5rem 1rem;
+
+  /* Interactions */
   cursor: pointer;
   transition: background-color var(--transition-duration),
     transform var(--transition-duration);
 }
 
 .hero__form-submit-button:hover {
+  /* Styling */
   background-color: var(--secondary-color);
+
+  /* Transform */
   transform: translateY(-2px);
 }
 
 .hero__form-submit-button {
+  /* Typography */
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   font-weight: 700;
 }
 
 .hero__form-url-input,
 .hero__form-submit-button {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Typography */
   font-size: 1em;
+
+  /* Sizing */
   width: 100%;
+
+  /* Styling */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.short-url:focus,
 .hero__form-url-input:focus,
 .hero__form-submit-button:focus {
+  /* Styling */
   outline: none;
   box-shadow: 0 0 0 3px var(--highlight-color);
 }
 
 .info {
+  /* Typography */
   font-size: 0.875rem;
   font-weight: 500;
   text-align: center;
+
+  /* Spacing */
   margin-top: 1rem;
 }
 
 .info a {
+  /* Spacing */
   margin: 0;
 }
 
