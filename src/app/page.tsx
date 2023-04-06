@@ -13,11 +13,10 @@ const siteKey =
       TURNSTILE_SITEKEYS["pass"]
     : TURNSTILE_SITEKEYS["production"];
 
-function getEmojiURL(key: string | null) {
-  const locationOrigin =
-    typeof window !== "undefined" ? window.location?.origin : null;
-  return (key || locationOrigin) ?? `${locationOrigin}${key}`;
-}
+const getEmojiURL = (key: string | null): string | null =>
+  key && typeof window !== "undefined"
+    ? `${window.location.origin}${key}`
+    : null;
 
 export default function Home() {
   const [status, setStatus] = useState<WidgetStatus>("unknown");
@@ -50,7 +49,7 @@ export default function Home() {
   }
 
   function handleClickLink() {
-    navigator.clipboard.writeText(emojiURL);
+    navigator.clipboard.writeText(emojiURL ?? "");
     setIsCopied(true);
   }
 
