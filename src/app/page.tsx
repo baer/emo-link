@@ -2,10 +2,18 @@
 
 import styles from "./page.module.css";
 
-import { useEffect, useRef, useState } from "react";
-import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
+import { useState } from "react";
+import { Turnstile, TurnstileProps } from "@marsidev/react-turnstile";
 import { WidgetStatus, JSONObject } from "../types";
 import { TURNSTILE_SITEKEYS, CREATE_LINK_ENDPOINT } from "../constants";
+
+// The appearance option was added to the code as of v0.1.0 but the Type
+// definitions were not updated accordingly. This hack is in place until that's
+// fixed.
+// https://github.com/marsidev/react-turnstile/releases/tag/v0.1.0
+const TurnstileWithAppearance = Turnstile as React.ComponentType<
+  TurnstileProps & { appearance: string }
+>;
 
 const siteKey =
   process.env.NODE_ENV === "development"
@@ -29,8 +37,6 @@ export default function Home() {
   const showResult = response && !loading;
   const [isCopied, setIsCopied] = useState(false);
   const emojiURL = getEmojiURL(response?.key as string);
-
-  const turnstileRef = useRef<TurnstileInstance>(null);
 
   async function handleSubmitURL() {
     setLoading(true);
@@ -112,11 +118,10 @@ export default function Home() {
             >
               Anti 🤖 Check
             </label>
-            <Turnstile
+            <TurnstileWithAppearance
               aria-describedby="turnstile-label"
               appearance="interaction-only"
               className={styles["hero__turnstile"]}
-              ref={turnstileRef}
               siteKey={siteKey}
               onError={() => setStatus("error")}
               onExpire={() => setStatus("expired")}
