@@ -15,7 +15,7 @@ interface Env {
   TURNSTILE_SECRET: string;
 }
 
-function validateURL(url: string) {
+function validateURL(url: string): boolean {
   try {
     new URL(url);
     return true;
@@ -46,7 +46,12 @@ export const onRequestPost: PagesFunction<Env> = async (
   const { token, url }: { token: string; url: string } =
     await context.request.json();
 
-  if (!validateURL(url)) {
+  // The JavaScipt URL interface requires a protocol, but users commonly type
+  // in URLs without one. Attempt to validate the input directly; if it fails,
+  // do what Google does and append a default protocol.
+  // https://blog.chromium.org/2021/03/a-safer-default-for-navigation-https.html
+  const isValidURL = validateURL(url) || validateURL("https://" + url);
+  if (!isValidURL) {
     return errorResponse(ErrorCodes.INVALID_URL);
   }
 
