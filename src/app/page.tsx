@@ -105,9 +105,16 @@ export default function Home() {
               }}
             />
 
+            <label
+              id="turnstile-label"
+              className={styles["hero__turnstile-label"]}
+              htmlFor="cf-turnstile"
+            >
+              Anti 🤖 Check
+            </label>
             <Turnstile
-              // This doesn't work, but maybe one day it will :)
-              tabIndex={-1}
+              aria-describedby="turnstile-label"
+              appearance="interaction-only"
               className={styles["hero__turnstile"]}
               ref={turnstileRef}
               siteKey={siteKey}

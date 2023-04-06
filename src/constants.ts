@@ -8,6 +8,8 @@ export enum TURNSTILE_SITEKEYS {
   pass = "1x00000000000000000000AA",
   fail = "2x00000000000000000000AB",
   interactive = "3x00000000000000000000FF",
+  passInvisible = "1x00000000000000000000BB",
+  failInvisible = "2x00000000000000000000BB",
   pages = "0x4AAAAAAADuk13L1j1kSUhb",
   production = "0x4AAAAAAADqvMFKDAPy1IkK",
 }

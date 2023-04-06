@@ -171,15 +171,19 @@
 }
 
 .hero__turnstile {
-  /* Sizing */
-  width: 300px;
-  height: 65px;
-
   /* Spacing */
   margin-bottom: 1.875rem;
+}
 
-  /* Styling */
-  background-color: #ffc600;
+.hero__turnstile-label {
+  /* Typography */
+  text-align: center;
+
+  /* Display */
+  display: inline-block;
+
+  /* Sizing */
+  width: 100%;
 }
 
 .hero__form-url-input {
