@@ -2,7 +2,7 @@
 
 import styles from "./page.module.css";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { WidgetStatus, JSONObject } from "../types";
 import { TURNSTILE_SITEKEYS, CREATE_LINK_ENDPOINT } from "../constants";
@@ -51,14 +51,27 @@ export default function Home() {
   function handleClickLink() {
     navigator.clipboard.writeText(emojiURL ?? "");
     setIsCopied(true);
+
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 4000);
   }
 
   return (
     <>
       {showResult && (
-        <div className={styles["short-url"]} onClick={handleClickLink}>
-          {emojiURL}
-        </div>
+        <>
+          <div
+            className={`${styles["short-url__copied-indicator"]} ${
+              isCopied ? styles["short-url__copied-indicator--visible"] : ""
+            }`}
+          >
+            Copied to Clipboard!
+          </div>
+          <div className={styles["short-url"]} onClick={handleClickLink}>
+            {emojiURL}
+          </div>
+        </>
       )}
 
       <section className={styles.hero}>

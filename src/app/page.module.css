@@ -4,6 +4,7 @@
 - * @link http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
 - * @link https://github.com/h5bp/main.css/issues/12#issuecomment-321106995
 - */
+
 .visually-hidden {
   position: absolute;
   width: 1;
@@ -38,6 +39,47 @@
 .short-url:focus {
   outline: none;
   box-shadow: 0 0 0 3px var(--highlight-color);
+}
+
+.short-url__copied-indicator {
+  padding: 5px 10px;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 20px;
+  font-size: 14px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease;
+}
+
+.short-url__copied-indicator--visible {
+  opacity: 1;
+  visibility: visible;
+  animation: bouncy 1s ease-out;
+}
+
+@keyframes bouncy {
+  0% {
+    transform: translate(0, 0);
+  }
+  15% {
+    transform: translate(0, -20px);
+  }
+  30% {
+    transform: translate(0, 0);
+  }
+  45% {
+    transform: translate(0, -10px);
+  }
+  60% {
+    transform: translate(0, 0);
+  }
+  75% {
+    transform: translate(0, -5px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
 
 .hero {
