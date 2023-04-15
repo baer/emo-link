@@ -1,4 +1,4 @@
-import emojiAlphabet from "./emoji-alphabet.json";
+import emojiAlphabet from "../emoji-alphabet.json";
 
 /**
  * Converts a hexadecimal number to an 8-bit binary string.

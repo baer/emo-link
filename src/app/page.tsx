@@ -2,10 +2,18 @@
 
 import styles from "./page.module.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Turnstile, TurnstileProps } from "@marsidev/react-turnstile";
 import { WidgetStatus, JSONObject } from "../types";
 import { TURNSTILE_SITEKEYS, CREATE_LINK_ENDPOINT } from "../constants";
+import emojiAlphabet from "../emoji-alphabet.json";
+import SmallUntilHover from "./small-until-hover";
+
+function generateRandomNumbers(n: number, min: number, max: number): number[] {
+  return Array.from(new Array(n), () =>
+    Math.floor(Math.random() * (max - min + 1) + min)
+  );
+}
 
 // The appearance option was added to the code as of v0.1.0 but the Type
 // definitions were not updated accordingly. This hack is in place until that's
@@ -27,6 +35,8 @@ const getEmojiURL = (key: string | null): string | null =>
     : null;
 
 export default function Home() {
+  const [randomEmojis, setRandomEmojis] = useState<string[]>([]);
+
   const [status, setStatus] = useState<WidgetStatus>("unknown");
   const [token, setToken] = useState<string>("");
   const canSubmit = status === "solved" && token !== "";
@@ -37,6 +47,15 @@ export default function Home() {
   const showResult = response && !loading;
   const [isCopied, setIsCopied] = useState(false);
   const emojiURL = getEmojiURL(response?.key as string);
+
+  useEffect(() => {
+    const emojisToGenerate = 40;
+    setRandomEmojis(
+      generateRandomNumbers(emojisToGenerate, 0, emojiAlphabet.length).map(
+        (randomNumber) => emojiAlphabet[randomNumber]
+      )
+    );
+  }, []);
 
   async function handleSubmitURL() {
     setLoading(true);
@@ -81,12 +100,12 @@ export default function Home() {
       )}
 
       <section className={styles.hero}>
-        <div className={styles["hero__image-container"]}>
-          <img
-            src="https://picsum.photos/485/244"
-            alt="stock photo"
-            className={styles["hero__image"]}
-          />
+        <div className={styles["hero__emoji-container"]}>
+          <p>
+            {randomEmojis.map((emoji, index) => (
+              <SmallUntilHover key={index}>{emoji}</SmallUntilHover>
+            ))}
+          </p>
         </div>
         <div className={styles["hero__form-container"]}>
           <div>

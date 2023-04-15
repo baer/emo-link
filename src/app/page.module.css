@@ -138,10 +138,13 @@
   align-items: center;
 }
 
-.hero__image-container {
+.hero__emoji-container {
+  /* Typography */
+  text-align: center;
+
   /* Sizing */
   height: 100%;
-  flex-basis: 60%;
+  flex-basis: 40%;
 
   /* Styling */
   border-radius: 10px 10px 0 0;
@@ -151,23 +154,13 @@
   position: relative;
 }
 
-.hero__image {
-  /* Sizing */
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-
-  /* Styling */
-  object-fit: cover;
-}
-
 .hero__form-container {
   /* Spacing */
   margin-top: 2rem;
   margin-bottom: 1.5rem;
 
   /* Sizing */
-  flex-basis: 40%;
+  flex-basis: 60%;
 }
 
 .hero__turnstile {
