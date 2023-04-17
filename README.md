@@ -31,9 +31,10 @@ Okay, so a few things are going on here:
    With the larger alphabet, you get distributed, offline-capable, fault-tolerant, collision-free ID creation without any of the drawbacks of the other approaches. The price is four characters. A typical shortener is 7 chars, and this needs 11.
 
 3. **Base N Encoding**
-   1. Convert UUID to bin
-   2. Group by M bits, where M is enough to encode N values. It's 12.
-   3. For each 12-bit grouping: `emojis[parseInt(binaryNumber, 2)]`
+   1. Convert UUID to a 128-bit binary number
+   2. Determine the number of bits (N) required to encode the alphabet by finding the largest number of bits that is less than the size of our alphabet. For this project, that's 12 since 2^12 < ~4500 < 2^13.
+   3. Group the UUID's into N-bit chunks.
+   4. For each N-bit grouping: `emojis[parseInt(binaryNumber, 2)]`
 
 #### Why would I do this?
 
