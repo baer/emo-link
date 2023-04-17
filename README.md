@@ -1,6 +1,6 @@
 # EmoLink
 
-An emoji-based URL shortener for the Edge.
+A backendless emoji-based URL shortener for the Edge.
 
 https://emol.ink/😻👩🏿‍🤝‍👨🏾👃🏾🛴👩🏾‍🎨🏍️🤷🏻‍♀🧑🏻‍🎨🧹🚚✋🏽
 
@@ -26,7 +26,7 @@ Okay, so a few things are going on here:
    - A coordination service to distribute ranges of IDs to persistent stateful servers - This is your typical systems-design answer because it's maximally scalable and fault tolerant. But it's also stateful, serverfull, pretty complex to implement, and can lead to weird ID fragmentation in your DB.
    - A random ID + collision validation - There are as many ways to do this as there are bugs in my code, but they all share the same weakness: the shorter they are, the more collisions you'll have, which is not a great tradeoff to have to make when the goal of a URL shortener is to produce the shortest possible ID.
 
-   But check your priors! All of these solutions assume a 62-char (`[A-Za-z0-9]`) alphabet, which makes a 32-char UUID too long for a service called a "shortener." BUT(!), by expanding the alphabet (your base) from 62 ASCII characters to 4,500 emojis, you can encode a UUID in just 11 characters
+   But check your priors! All of these solutions are workarounds that start with the assumption of a 62-char (`[A-Za-z0-9]`) alphabet, which makes a 32-char UUID too long for a service called a "shortener." BUT(!), by expanding the alphabet (your base) from 62 ASCII characters to 4,500 emojis, you can encode a UUID in just 11 characters
 
    With the larger alphabet, you get distributed, offline-capable, fault-tolerant, collision-free ID creation without any of the drawbacks of the other approaches. The price is four characters. A typical shortener is 7 chars, and this needs 11.
 
@@ -38,10 +38,11 @@ Okay, so a few things are going on here:
 
 #### Why would I do this?
 
-Well, one answer might be that an interviewer asked how you could write a collision-free, client-side-only, database-less URL shortener. A better answer is that it actually has a few actual advantages:
+Well, one answer might be "[because I can](https://en.wikipedia.org/wiki/George_Mallory#:~:text=Mallory%20is%20famously%20quoted%20as,famous%20three%20words%20in%20mountaineering%22.)". A better answer is that this is pretty novel and actually has a few actual advantages:
 
-1. It can be run at the Edge, or even in the client, without any centralized services, distributed consensus, or specific DB capability.
-2. In other solutions, a bad actor can fill your large but still finite range, typically solved by adding auth. With this solution, the address space is infinite-ish, so that's not really an issue.
-3. This can be done offline!
-4. IRIs are insufferably modern. So, if you use SvelteKit, wear a [teenie weenie beanie](https://youtu.be/9r5XVdKKcas), and don't think of the beach when you see a cartoon crab; you should probably be using IRIs.
-5. Emoji is better than ASCII.
+1. It's backendless, which lets you run this on devices at the Edge, which may have limited, or intermittent connectivity.
+2. It's simple and dependency-free. The only servers that don't break in production are servers that don't exist.
+3. It does not constrain or require any specific tools or architecture. For example, ID generation requires specific types of DBs and distributed hashing requires load balancing, health checking, and a coordination service.
+4. Your address space is unlimited. The standard approach to the problem uses an address space that is 7^62. This is very large, but because it's finite, you'll need to protect against bad actors filling up the space. This is typically done with an auth layer, but this isn't an issue when your address space is infinite-ish.
+5. IRIs are insufferably modern. So, if you use SvelteKit, wear a [teenie weenie beanie](https://youtu.be/9r5XVdKKcas), and don't think of the beach when you see a cartoon crab; you should probably be using IRIs.
+6. Emoji is better than ASCII.
