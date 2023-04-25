@@ -1,0 +1,61 @@
+.app-layout {
+  min-height: 100vh;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+
+  gap: 1rem;
+}
+
+.app-layout > header {
+  grid-area: header;
+
+  display: grid;
+  grid-template-columns:
+    1fr
+    min(90ch, 100%)
+    1fr;
+}
+
+.app-layout > header > * {
+  grid-column: 2;
+}
+
+/* https://www.joshwcomeau.com/css/full-bleed/ */
+.app-layout > main {
+  grid-area: main;
+
+  display: grid;
+  grid-template-columns:
+    1fr
+    min(90ch, 100%)
+    1fr;
+}
+
+.app-layout > main > * {
+  grid-column: 2;
+}
+
+.app-layout > footer {
+  grid-area: footer;
+  text-align: center;
+
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.footer {
+  text-align: center;
+  color: var(--dark-color);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.footer a {
+  margin: 0;
+}

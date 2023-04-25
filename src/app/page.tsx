@@ -44,7 +44,6 @@ export default function Home() {
 
   const [response, setResponse] = useState<JSONObject | null>(null);
   const [loading, setLoading] = useState(false);
-  const showResult = response && !loading;
   const [isCopied, setIsCopied] = useState(false);
   const emojiURL = getEmojiURL(response?.key as string);
 
@@ -84,20 +83,18 @@ export default function Home() {
 
   return (
     <>
-      {showResult && (
-        <>
-          <div
-            className={`${styles["short-url__copied-indicator"]} ${
-              isCopied ? styles["short-url__copied-indicator--visible"] : ""
-            }`}
-          >
-            Copied to Clipboard!
-          </div>
-          <div className={styles["short-url"]} onClick={handleClickLink}>
-            {emojiURL}
-          </div>
-        </>
-      )}
+      <>
+        <div
+          className={`${styles["short-url__copied-indicator"]} ${
+            isCopied ? styles["short-url__copied-indicator--visible"] : ""
+          }`}
+        >
+          Copied to Clipboard!
+        </div>
+        <div className={styles["short-url"]} onClick={handleClickLink}>
+          {emojiURL}
+        </div>
+      </>
 
       <section className={styles.hero}>
         <div className={styles["hero__emoji-container"]}>

@@ -120,9 +120,10 @@
     measurement 
   */
   min-width: 320px;
-  width: 80%;
   max-width: 1200px;
   min-height: 250px;
+  margin-left: 1rem;
+  margin-right: 1rem;
 
   /* Styling */
   background-color: rgba(255, 255, 255, 0.7);
@@ -139,6 +140,9 @@
 }
 
 .hero__emoji-container {
+  /* Display */
+  display: flex;
+
   /* Typography */
   text-align: center;
 
@@ -274,6 +278,12 @@
 
 /* Styles for breakpoint-sm (600px and up) */
 @media (min-width: 600px) {
+  .hero {
+    flex-direction: row;
+  }
+  .hero__emoji-container {
+    align-items: center;
+  }
   .short-url {
     font-size: 1.5rem;
   }
@@ -288,9 +298,6 @@
 
 /* Styles for breakpoint-md (900px and up) */
 @media (min-width: 900px) {
-  .hero {
-    flex-direction: row;
-  }
   .short-url {
     font-size: 2.5rem;
     margin-bottom: 1em;

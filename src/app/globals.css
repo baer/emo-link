@@ -33,42 +33,12 @@
 }
 
 body {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  min-height: 100vh;
   background: linear-gradient(135deg, var(--primary-color), #4dff4d),
     linear-gradient(45deg, #ffc600, rgba(255, 198, 0, 0.5)),
     linear-gradient(-45deg, #ff00ff, rgba(255, 0, 255, 0.5)),
     linear-gradient(-135deg, #00ffff, rgba(0, 255, 255, 0.5));
   background-blend-mode: screen;
   font-family: var(--font-family-default);
-}
-
-header,
-footer {
-  background-color: transparent;
-  padding: 1rem;
-}
-
-footer {
-  text-align: center;
-  color: var(--dark-color);
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-footer a {
-  margin: 0;
-}
-
-main {
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 1.5rem;
-  padding-bottom: 0;
 }
 
 a {
@@ -97,24 +67,4 @@ a:focus {
 p {
   font-size: 1.125rem;
   line-height: 1.6em;
-}
-
-/* Styles for breakpoint-sm (600px and up) */
-@media (min-width: 600px) {
-  /* Add any styles specific to small devices, if needed */
-}
-
-/* Styles for breakpoint-md (900px and up) */
-@media (min-width: 900px) {
-  /* Add any styles specific to medium devices, if needed */
-}
-
-/* Styles for breakpoint-lg (1200px and up) */
-@media (min-width: 1200px) {
-  /* Add any styles specific to large devices, if needed */
-}
-
-/* Styles for breakpoint-xl (1536px and up) */
-@media (min-width: 1536px) {
-  /* Add any styles specific to extra-large devices, if needed */
 }
