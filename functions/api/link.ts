@@ -15,6 +15,23 @@ interface Env {
   TURNSTILE_SECRET: string;
 }
 
+// The JavaScipt URL interface requires a protocol, but users commonly type
+// in URLs without one. Attempt to validate the input directly; if it fails,
+// do what Google does and append a default protocol.
+// https://blog.chromium.org/2021/03/a-safer-default-for-navigation-https.html
+function getValidURLWithProtocol(url: string): string | null {
+  if (validateURL(url)) {
+    return url;
+  }
+
+  const httpsUrl = `https://${url}`;
+  if (validateURL(httpsUrl)) {
+    return httpsUrl;
+  }
+
+  return null;
+}
+
 function validateURL(url: string): boolean {
   try {
     new URL(url);
@@ -46,18 +63,8 @@ export const onRequestPost: PagesFunction<Env> = async (
   const { token, url }: { token: string; url: string } =
     await context.request.json();
 
-  // The JavaScipt URL interface requires a protocol, but users commonly type
-  // in URLs without one. Attempt to validate the input directly; if it fails,
-  // do what Google does and append a default protocol.
-  // https://blog.chromium.org/2021/03/a-safer-default-for-navigation-https.html
-  const isValidURL = validateURL(url) || validateURL("https://" + url);
-
-  console.log(url);
-  console.log(validateURL(url));
-  console.log(validateURL("https://" + url));
-  console.log(isValidURL);
-
-  if (!isValidURL) {
+  const urlWithProtocol = getValidURLWithProtocol(url);
+  if (!urlWithProtocol) {
     return errorResponse(ErrorCodes.INVALID_URL);
   }
 
@@ -74,7 +81,7 @@ export const onRequestPost: PagesFunction<Env> = async (
   // "This method returns a Promise that you should await on in order to verify
   // a successful update."
   // https://developers.cloudflare.com/workers/runtime-apis/kv/
-  await context.env.EMO_LINK.put(key, url);
+  await context.env.EMO_LINK.put(key, urlWithProtocol);
 
   return jsonResponse({
     data: {
