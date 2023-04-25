@@ -122,7 +122,7 @@ export default function Home() {
               type="url"
               id="url"
               name="url"
-              placeholder="http://ericbaer.com/"
+              placeholder="https://ericbaer.com/"
               aria-describedby="url-input-label"
               value={userURL}
               onChange={(event) => {
