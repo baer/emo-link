@@ -51,6 +51,12 @@ export const onRequestPost: PagesFunction<Env> = async (
   // do what Google does and append a default protocol.
   // https://blog.chromium.org/2021/03/a-safer-default-for-navigation-https.html
   const isValidURL = validateURL(url) || validateURL("https://" + url);
+
+  console.log(url);
+  console.log(validateURL(url));
+  console.log(validateURL("https://" + url));
+  console.log(isValidURL);
+
   if (!isValidURL) {
     return errorResponse(ErrorCodes.INVALID_URL);
   }
