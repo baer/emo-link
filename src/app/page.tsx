@@ -166,7 +166,7 @@ export default function Home() {
         <p>
           To learn how and why this works, check out my{" "}
           <a
-            href="https://ericbaer.com/"
+            href="https://ericbaer.com/blog/emo-link"
             target="_blank"
             rel="noopener noreferrer"
           >
