@@ -11,18 +11,18 @@
     "generate-emoji-alphabet": "node ./scripts/generate-emoji-alphabet.js"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.20230321.0",
-    "@marsidev/react-turnstile": "0.1.2",
-    "@types/node": "18.15.11",
-    "@types/react": "18.0.33",
-    "@types/react-dom": "18.0.11",
+    "@cloudflare/workers-types": "4.20230404.0",
+    "@marsidev/react-turnstile": "0.2.1",
+    "@types/node": "18.16.1",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.1",
     "@unicode/unicode-15.0.0": "1.3.1",
-    "eslint": "8.37.0",
-    "eslint-config-next": "13.2.4",
-    "next": "13.2.5-canary.29",
+    "eslint": "8.39.0",
+    "eslint-config-next": "13.3.1",
+    "next": "13.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "serve": "14.2.0",
-    "typescript": "5.0.3"
+    "typescript": "5.0.4"
   }
 }
