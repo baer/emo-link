@@ -8,6 +8,7 @@ import { WidgetStatus, JSONObject } from "../types";
 import { TURNSTILE_SITEKEYS, CREATE_LINK_ENDPOINT } from "../constants";
 import emojiAlphabet from "../emoji-alphabet.json";
 import SmallUntilHover from "./small-until-hover";
+import joinClasses from "../util/join-classes";
 
 function generateRandomNumbers(n: number, min: number, max: number): number[] {
   return Array.from(new Array(n), () =>
@@ -49,7 +50,7 @@ export default function Home() {
   // const emojiURL = "https://emol.ink/😻👩🏿‍🤝‍👨🏾👃🏾🛴👩🏾‍🎨🏍️🤷🏻‍♀🧑🏻‍🎨🧹🚚✋🏽";
 
   useEffect(() => {
-    const emojisToGenerate = 40;
+    const emojisToGenerate = 20;
     setRandomEmojis(
       generateRandomNumbers(emojisToGenerate, 0, emojiAlphabet.length).map(
         (randomNumber) => emojiAlphabet[randomNumber]
@@ -83,60 +84,129 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div>
       <div
-        className={`${styles["short-url__copied-indicator"]} ${
-          isCopied ? styles["short-url__copied-indicator--visible"] : ""
-        }`}
+        className={joinClasses([
+          styles["short-url__copied-indicator"],
+          ...(isCopied ? [styles["short-url__copied-indicator--visible"]] : []),
+          "text-base",
+          "text-white",
+          "text-center",
+          "mb-1",
+          "lg:mb-4",
+          "mx-12",
+        ])}
       >
         Copied to Clipboard!
       </div>
-      <div className={styles["short-url"]} onClick={handleClickLink}>
+      <div
+        className={joinClasses([
+          styles["short-url"],
+          "mb-2",
+          "md:mb-10",
+          "w-full",
+          "no-underline",
+          "text-center",
+          "font-bold",
+          "text-base",
+          "md:text-2xl",
+          "lg:text-4xl",
+        ])}
+        onClick={handleClickLink}
+      >
         {emojiURL}
       </div>
 
-      <section className={styles.hero}>
-        <div className={styles["hero__emoji-container"]}>
+      <section
+        className={joinClasses([
+          "text-gray-600",
+          "body-font",
+          "shadow-md",
+          "rounded-lg",
+          "container",
+          "bg-white",
+          "flex-col",
+          "flex",
+          "items-center",
+          "md:flex-row",
+          "mx-auto",
+          "p-4",
+        ])}
+      >
+        <div className="h-40 md:h-auto lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-2 md:mb- text-center">
           <p>
             {randomEmojis.map((emoji, index) => (
               <SmallUntilHover key={index}>{emoji}</SmallUntilHover>
             ))}
           </p>
         </div>
-        <div className={styles["hero__form-container"]}>
-          <div>
-            <label
-              id="url-input-label"
-              htmlFor="url"
-              className={styles["visually-hidden"]}
-            >
-              URL to shorten
-            </label>
-            <input
-              className={styles["hero__form-url-input"]}
-              required
-              type="url"
-              id="url"
-              name="url"
-              placeholder="https://ericbaer.com/"
-              aria-describedby="url-input-label"
-              value={userURL}
-              onChange={(event) => {
-                setUserURL(event.target.value);
-              }}
-            />
 
+        <div
+          className={joinClasses([
+            "flex",
+            "flex-col",
+            "items-center",
+            "text-center",
+            "lg:flex-grow",
+            "lg:pl-24",
+            "md:items-start",
+            "md:pl-16",
+            "md:text-left",
+            "md:w-1/2",
+            "md:gap-8",
+          ])}
+        >
+          <div className="p-2 w-full">
+            <div className="relative">
+              <label
+                id="url-input-label"
+                htmlFor="url"
+                className={styles["visually-hidden"]}
+              >
+                URL to shorten
+              </label>
+              <input
+                required
+                type="url"
+                id="url"
+                name="url"
+                placeholder="https://ericbaer.com/"
+                aria-describedby="url-input-label"
+                value={userURL}
+                onChange={(event) => {
+                  setUserURL(event.target.value);
+                }}
+                className={joinClasses([
+                  styles["hero__form-url-input"],
+                  "bg-gray-100",
+                  "bg-opacity-50",
+                  "duration-200",
+                  "ease-in-out",
+                  "focus:bg-white",
+                  "leading-8",
+                  "px-3",
+                  "py-1",
+                  "shadow-md",
+                  "text-base",
+                  "text-gray-700",
+                  "transition-colors",
+                  "w-full",
+                ])}
+              />
+            </div>
+          </div>
+
+          <div className="bg-gray-100 rounded my-4 p-2">
             <label
               id="turnstile-label"
-              className={styles["hero__turnstile-label"]}
               htmlFor="cf-turnstile"
+              className="inline-block w-full text-center"
             >
               Anti 🤖 Check
             </label>
             <TurnstileWithAppearance
               aria-describedby="turnstile-label"
               appearance="interaction-only"
-              className={styles["hero__turnstile"]}
               siteKey={siteKey}
               onError={() => setStatus("error")}
               onExpire={() => setStatus("expired")}
@@ -145,23 +215,42 @@ export default function Home() {
                 setStatus("solved");
               }}
             />
-
-            <button
-              aria-label="Shorten URL"
-              className={styles["hero__form-submit-button"]}
-              onClick={handleSubmitURL}
-              disabled={!canSubmit || loading}
-            >
-              Submit
-            </button>
           </div>
+
+          <button
+            aria-label="Shorten URL"
+            onClick={handleSubmitURL}
+            disabled={!canSubmit || loading}
+            className={joinClasses([
+              styles["hero__form-submit-button"],
+              "w-full",
+              "shadow-md",
+              "border-0",
+              "py-2",
+              "px-6",
+              "focus:outline-none",
+              "text-lg",
+              "uppercase",
+              "font-bold",
+            ])}
+          >
+            Submit
+          </button>
         </div>
       </section>
 
-      <article className={styles.info}>
+      <article
+        className={joinClasses([
+          "mt-4",
+          "text-md",
+          "font-medium",
+          "text-center",
+        ])}
+      >
         <p>
           To learn how and why this works, check out my{" "}
           <a
+            className="m-0"
             href="https://ericbaer.com/blog/emo-link"
             target="_blank"
             rel="noopener noreferrer"
@@ -171,6 +260,6 @@ export default function Home() {
           .
         </p>
       </article>
-    </>
+    </div>
   );
 }

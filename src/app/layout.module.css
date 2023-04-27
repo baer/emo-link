@@ -8,8 +8,6 @@
     "header"
     "main"
     "footer";
-
-  gap: 1rem;
 }
 
 .app-layout > header {

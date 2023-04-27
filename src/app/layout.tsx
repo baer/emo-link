@@ -1,3 +1,4 @@
+import joinClasses from "@/util/join-classes";
 import "./globals.css";
 import styles from "./layout.module.css";
 
@@ -19,10 +20,36 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className={styles["app-layout"]}>
-          <header style={{ textAlign: "center", padding: ".5rem" }}>
-            <h1 style={{ fontWeight: 500, marginTop: ".5rem" }}>EmoLink</h1>
-            <h2 style={{ fontWeight: 400 }}>An emoji-based URL shortener</h2>
+        <div
+          className={joinClasses([styles["app-layout"], "gap-1", "md:gap-4"])}
+        >
+          <header>
+            <div className="text-center mt-4 mb-0 lg:my-5">
+              <h1
+                className={joinClasses([
+                  "font-medium",
+                  "mb-0",
+                  "md:mb-5",
+                  "text-2xl",
+                  "sm:text-3xl",
+                  "text-center",
+                  "text-gray-900",
+                  "title-font",
+                ])}
+              >
+                EmoLink
+              </h1>
+              <p
+                className={joinClasses([
+                  "text-base",
+                  "leading-relaxed",
+                  "xl:w-2/4",
+                  "lg:w-3/4 mx-auto",
+                ])}
+              >
+                An emoji-based URL shortener
+              </p>
+            </div>
           </header>
           <main role="main">{children}</main>
           <footer className={styles.footer}>

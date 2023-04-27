@@ -25,21 +25,9 @@
 
 .short-url {
   /* Typography */
-  font-size: 0.92rem;
   font-family: var(--font-family-mono);
-  font-weight: 700;
-  text-align: center;
   color: var(--secondary-color);
   text-decoration: none;
-
-  /* Sizing */
-  width: 100%;
-
-  /* Display */
-  display: inline-block;
-
-  /* Spacing */
-  margin-bottom: 3em;
 
   /* Styling */
   border-bottom: var(--border-width) var(--border-style) transparent;
@@ -55,16 +43,8 @@
 }
 
 .short-url__copied-indicator {
-  /* Typography */
-  font-size: 14px;
-  color: white;
-  text-align: center;
-
   /* Sizing */
   padding: 5px 10px;
-  margin-bottom: 1rem;
-  margin-left: 2rem;
-  margin-right: 2rem;
 
   /* Styling */
   background-color: #4caf50;
@@ -111,38 +91,6 @@
   }
 }
 
-.hero {
-  /* Display */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  /* Sizing */
-  /* 
-    Cloudflare's Turnstile widget is 300px. That's why this is a pixel-based
-    measurement 
-  */
-  min-width: 320px;
-  max-width: 1200px;
-  min-height: 250px;
-  margin-left: 1rem;
-  margin-right: 1rem;
-
-  /* Styling */
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 10px;
-  box-shadow: 0 5px 0.5rem rgba(0, 0, 0, 0.1);
-}
-
-.hero__image-container,
-.hero__form-container {
-  /* Display */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .hero__emoji-container {
   /* Display */
   display: flex;
@@ -162,67 +110,20 @@
   position: relative;
 }
 
-.hero__form-container {
-  /* Spacing */
-  margin-bottom: 1.5rem;
-
-  /* Sizing */
-  flex-basis: 60%;
-}
-
-.hero__turnstile {
-  /* Spacing */
-  margin-bottom: 1.875rem;
-}
-
-.hero__turnstile-label {
-  /* Typography */
-  text-align: center;
-
-  /* Display */
-  display: inline-block;
-
-  /* Sizing */
-  width: 100%;
-}
-
 .hero__form-url-input {
-  /* Typography */
-  font-size: 1em;
-
-  /* Sizing */
-  width: 100%;
-
-  /* Spacing */
-  margin-bottom: 1.875rem;
-
   /* Styling */
   background-color: var(--light-color);
   border: var(--border-width) var(--border-style) var(--dark-color);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-  /* Padding */
-  padding: 0.5rem;
 }
 
 .hero__form-submit-button {
   /* Typography */
-  font-weight: bold;
-  text-transform: uppercase;
-  font-weight: 700;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   color: var(--light-color);
-
-  /* Sizing */
-  width: 100%;
 
   /* Styling */
   background-color: var(--primary-color);
   border: none;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-  /* Padding */
-  padding: 0.5rem 1rem;
 
   /* Interactions */
   cursor: pointer;
@@ -238,93 +139,10 @@
   transform: translateY(-2px);
 }
 
-.hero__form-submit-button {
-  /* Typography */
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-  font-weight: 700;
-}
-
-.hero__form-url-input,
-.hero__form-submit-button {
-  /* Typography */
-  font-size: 1em;
-
-  /* Sizing */
-  width: 100%;
-
-  /* Styling */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
 .short-url:focus,
 .hero__form-url-input:focus,
 .hero__form-submit-button:focus {
   /* Styling */
   outline: none;
   box-shadow: 0 0 0 3px var(--highlight-color);
-}
-
-.info {
-  /* Typography */
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-align: center;
-
-  /* Spacing */
-  margin-top: 1rem;
-}
-
-.info a {
-  /* Spacing */
-  margin: 0;
-}
-
-/* Styles for breakpoint-sm (600px and up) */
-@media (min-width: 600px) {
-  .hero {
-    flex-direction: row;
-  }
-  .hero__emoji-container {
-    align-items: center;
-  }
-  .short-url {
-    font-size: 1.5rem;
-  }
-  .hero__form-container {
-    margin-top: 3rem;
-    margin-bottom: 3rem;
-  }
-  .info {
-    margin: 3em;
-  }
-}
-
-/* Styles for breakpoint-md (900px and up) */
-@media (min-width: 900px) {
-  .short-url {
-    font-size: 2.5rem;
-    margin-bottom: 1em;
-  }
-  .hero__image-container {
-    border-radius: 10px 0 0 10px;
-  }
-  .hero__form-container {
-    margin: 1rem;
-  }
-  .hero__form-url-input {
-    font-size: 1em;
-  }
-  .info {
-    margin: 2em;
-  }
-}
-
-/* Styles for breakpoint-lg (1200px and up) */
-@media (min-width: 1200px) {
-  /* Add any styles specific to large devices, if needed */
-}
-
-/* Styles for breakpoint-xl (1536px and up) */
-@media (min-width: 1536px) {
-  /* Add any styles specific to extra-large devices, if needed */
 }
