@@ -45,8 +45,8 @@ export default function Home() {
   const [response, setResponse] = useState<JSONObject | null>(null);
   const [loading, setLoading] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
-  // const emojiURL = getEmojiURL(response?.key as string);
-  const emojiURL = "https://emol.ink/😻👩🏿‍🤝‍👨🏾👃🏾🛴👩🏾‍🎨🏍️🤷🏻‍♀🧑🏻‍🎨🧹🚚✋🏽";
+  const emojiURL = getEmojiURL(response?.key as string);
+  // const emojiURL = "https://emol.ink/😻👩🏿‍🤝‍👨🏾👃🏾🛴👩🏾‍🎨🏍️🤷🏻‍♀🧑🏻‍🎨🧹🚚✋🏽";
 
   useEffect(() => {
     const emojisToGenerate = 40;
