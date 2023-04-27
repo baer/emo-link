@@ -58,9 +58,13 @@
   /* Typography */
   font-size: 14px;
   color: white;
+  text-align: center;
 
   /* Sizing */
   padding: 5px 10px;
+  margin-bottom: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
 
   /* Styling */
   background-color: #4caf50;
