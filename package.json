@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "4.20230321.0",
-    "@marsidev/react-turnstile": "0.1.2",
+    "@marsidev/react-turnstile": "0.2.1",
     "@types/node": "18.15.11",
     "@types/react": "18.0.33",
     "@types/react-dom": "18.0.11",
