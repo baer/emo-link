@@ -20,7 +20,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className={styles["app-layout"]}>
-          <header></header>
+          <header style={{ textAlign: "center", padding: ".5rem" }}>
+            <h1 style={{ fontWeight: 500, marginTop: ".5rem" }}>EmoLink</h1>
+            <h2 style={{ fontWeight: 400 }}>An emoji-based URL shortener</h2>
+          </header>
           <main role="main">{children}</main>
           <footer className={styles.footer}>
             © {new Date().getFullYear()} Made by{" "}
