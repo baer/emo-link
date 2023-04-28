@@ -242,7 +242,7 @@ export default function Home() {
       <article
         className={joinClasses([
           "mt-4",
-          "text-md",
+          "text-sm",
           "font-medium",
           "text-center",
         ])}

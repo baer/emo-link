@@ -41,17 +41,13 @@
 
 .app-layout > footer {
   grid-area: footer;
-  text-align: center;
 
   margin-top: 2rem;
   margin-bottom: 1rem;
 }
 
 .footer {
-  text-align: center;
   color: var(--dark-color);
-  font-size: 0.875rem;
-  font-weight: 500;
 }
 
 .footer a {

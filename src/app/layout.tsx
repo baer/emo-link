@@ -27,7 +27,7 @@ export default function RootLayout({
             <div className="text-center mt-4 mb-0 lg:my-5">
               <h1
                 className={joinClasses([
-                  "font-medium",
+                  "font-semibold",
                   "mb-0",
                   "md:mb-5",
                   "text-2xl",
@@ -45,14 +45,24 @@ export default function RootLayout({
                   "leading-relaxed",
                   "xl:w-2/4",
                   "lg:w-3/4 mx-auto",
+                  "font-medium",
                 ])}
               >
                 An emoji-based URL shortener
               </p>
             </div>
           </header>
+
           <main role="main">{children}</main>
-          <footer className={styles.footer}>
+
+          <footer
+            className={joinClasses([
+              styles.footer,
+              "text-center",
+              "text-sm",
+              "font-medium",
+            ])}
+          >
             © {new Date().getFullYear()} Made by{" "}
             <a href="https://ericbaer.com/">Eric Baer</a> with 🧑‍🔬.
           </footer>

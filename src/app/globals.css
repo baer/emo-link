@@ -67,8 +67,3 @@ a:focus {
   outline: none;
   box-shadow: 0 0 0 3px var(--highlight-color);
 }
-
-p {
-  font-size: 1.125rem;
-  line-height: 1.6em;
-}
