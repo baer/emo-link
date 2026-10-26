@@ -1,10 +1,10 @@
-import React, { useState, ReactNode } from "react";
+import { useState, type FC, type ReactNode } from "react";
 
 interface SmallUntilHoverProps {
   children: ReactNode;
 }
 
-const SmallUntilHover: React.FC<SmallUntilHoverProps> = ({ children }) => {
+const SmallUntilHover: FC<SmallUntilHoverProps> = ({ children }) => {
   const [hover, setHover] = useState<boolean>(false);
 
   const handleMouseEnter = () => {

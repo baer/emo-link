@@ -3,26 +3,18 @@
 import styles from "./page.module.css";
 
 import { useEffect, useState } from "react";
-import { Turnstile, TurnstileProps } from "@marsidev/react-turnstile";
-import { WidgetStatus, JSONObject } from "../types";
+import { Turnstile } from "@marsidev/react-turnstile";
+import type { WidgetStatus, JSONObject } from "../types";
 import { TURNSTILE_SITEKEYS, CREATE_LINK_ENDPOINT } from "../constants";
 import emojiAlphabet from "../emoji-alphabet.json";
 import SmallUntilHover from "./small-until-hover";
 import joinClasses from "../util/join-classes";
 
 function generateRandomNumbers(n: number, min: number, max: number): number[] {
-  return Array.from(new Array(n), () =>
+  return Array.from({ length: n }, () =>
     Math.floor(Math.random() * (max - min + 1) + min)
   );
 }
-
-// The appearance option was added to the code as of v0.1.0 but the Type
-// definitions were not updated accordingly. This hack is in place until that's
-// fixed.
-// https://github.com/marsidev/react-turnstile/releases/tag/v0.1.0
-const TurnstileWithAppearance = Turnstile as React.ComponentType<
-  TurnstileProps & { appearance: string }
->;
 
 const siteKey =
   process.env.NODE_ENV === "development"
@@ -204,9 +196,9 @@ export default function Home() {
             >
               Anti 🤖 Check
             </label>
-            <TurnstileWithAppearance
+            <Turnstile
               aria-describedby="turnstile-label"
-              appearance="interaction-only"
+              options={{ appearance: "interaction-only" }}
               siteKey={siteKey}
               onError={() => setStatus("error")}
               onExpire={() => setStatus("expired")}
