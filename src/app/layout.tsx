@@ -1,12 +1,14 @@
-import joinClasses from "@/util/join-classes";
 import "./globals.css";
-import styles from "./layout.module.css";
 
 import { Inter } from "next/font/google";
+import type { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
+// The static export displays the year at build time.
+const BUILD_YEAR = new Date().getFullYear();
+
+export const metadata: Metadata = {
   title: "EmoLink",
   description:
     "A collision-free, emoji-based URL shortener built for David Howell Evans",
@@ -20,51 +22,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div
-          className={joinClasses([styles["app-layout"], "gap-1", "md:gap-4"])}
-        >
-          <header>
-            <div className="text-center mt-4 mb-0 lg:my-5">
-              <h1
-                className={joinClasses([
-                  "font-semibold",
-                  "mb-0",
-                  "md:mb-5",
-                  "text-2xl",
-                  "sm:text-3xl",
-                  "text-center",
-                  "text-gray-900",
-                  "title-font",
-                ])}
-              >
-                EmoLink
-              </h1>
-              <p
-                className={joinClasses([
-                  "text-base",
-                  "leading-relaxed",
-                  "xl:w-2/4",
-                  "lg:w-3/4 mx-auto",
-                  "font-medium",
-                ])}
-              >
-                An emoji-based URL shortener
-              </p>
-            </div>
+        <div className="flex min-h-screen flex-col gap-1 md:gap-4">
+          <header className="mx-auto mt-4 w-full max-w-[90ch] text-center lg:my-5">
+            <h1 className="text-2xl font-semibold text-gray-900 sm:text-3xl md:mb-5">
+              EmoLink
+            </h1>
+            <p className="mx-auto text-base font-medium leading-relaxed lg:w-3/4 xl:w-2/4">
+              An emoji-based URL shortener
+            </p>
           </header>
 
-          <main role="main">{children}</main>
+          <main className="mx-auto w-full max-w-[90ch]">{children}</main>
 
-          <footer
-            className={joinClasses([
-              styles.footer,
-              "text-center",
-              "text-sm",
-              "font-medium",
-            ])}
-          >
-            © {new Date().getFullYear()} Made by{" "}
-            <a href="https://ericbaer.com/">Eric Baer</a> with 🧑‍🔬.
+          <footer className="mt-auto mb-4 pt-8 text-center text-sm font-medium text-dark">
+            © {BUILD_YEAR} Made by{" "}
+            <a className="link" href="https://ericbaer.com/">
+              Eric Baer
+            </a>{" "}
+            with 🧑‍🔬.
           </footer>
         </div>
       </body>
