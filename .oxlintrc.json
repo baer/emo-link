@@ -31,9 +31,7 @@
     {
       "files": ["src/app/page.tsx"],
       "rules": {
-        "react/set-state-in-effect": "off",
-        "jsx-a11y/click-events-have-key-events": "off",
-        "jsx-a11y/no-static-element-interactions": "off"
+        "react/set-state-in-effect": "off"
       }
     }
   ],

@@ -80,7 +80,7 @@ test("Turnstile must return an OK response with literal success true", async (t)
   }
 });
 
-test("verified creation stores the normalized URL and preserves the response shape", async (t) => {
+test("verified creation stores the normalized URL and returns the shared response shape", async (t) => {
   const verify = t.mock.method(globalThis, "fetch", async (input, init) => {
     assert.equal(input, VERIFY_TURNSTILE_TOKEN_ENDPOINT);
     assert.equal(init?.method, "POST");
@@ -95,8 +95,16 @@ test("verified creation stores the normalized URL and preserves the response sha
   const response = await createLink(ctx, (uuid) => { encodedUUID = uuid; return "😀🌍"; });
   assert.equal(response.status, 200);
   const body = await response.json();
-  assert.match(body.uuid, /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
-  assert.deepEqual(body, { uuid: encodedUUID, uuidAsEmoji: "😀🌍", uriEncodedEmojiUUID: encodeURIComponent("😀🌍"), key: "/😀🌍" });
+  assert.match(encodedUUID ?? "", /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+  assert.deepEqual(body, { key: "/😀🌍" });
   assert.deepEqual(ctx.writes, [["/😀🌍", "https://example.com/a"]]);
   assert.equal(verify.mock.callCount(), 1);
+});
+
+
+test("persistence failures reject without reporting a created link", async (t) => {
+  t.mock.method(globalThis, "fetch", async () => Response.json({ success: true }));
+  const ctx = context(JSON.stringify({ url: "example.com", token: "proof" }));
+  ctx.env.EMO_LINK.put = async () => { throw new Error("KV unavailable"); };
+  await assert.rejects(createLink(ctx, () => "😀"), /KV unavailable/);
 });
