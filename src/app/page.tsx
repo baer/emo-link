@@ -124,7 +124,7 @@ export default function Home() {
       )}
 
       <section className="container mx-auto flex flex-col items-center rounded-lg bg-white p-4 text-gray-600 shadow-md md:flex-row">
-        <div className="mb-2 h-40 w-5/6 text-center md:mb-0 md:h-auto md:w-1/2 lg:w-full lg:max-w-lg">
+        <div className="mb-2 min-h-40 w-5/6 text-center md:mb-0 md:min-h-0 md:w-1/2 lg:w-full lg:max-w-lg">
           <p>
             {randomEmojis.map((emoji, index) => (
               <span
