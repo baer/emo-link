@@ -44,6 +44,7 @@
     "node_modules",
     "functions/**/*",
     "src/**/*.test.ts",
-    "archive"
+    "archive",
+    "worker/**/*"
   ]
 }
