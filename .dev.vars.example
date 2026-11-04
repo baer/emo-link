@@ -1,0 +1,2 @@
+# Cloudflare public test secret for local development only.
+TURNSTILE_SECRET=1x0000000000000000000000000000000AA

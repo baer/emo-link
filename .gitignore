@@ -22,3 +22,7 @@ yarn-error.log*
 next-env.d.ts
 
 .vscode
+
+# Cloudflare local state and secrets
+.dev.vars
+.wrangler/

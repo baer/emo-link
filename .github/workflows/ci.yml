@@ -38,5 +38,8 @@ jobs:
       - name: Check generated emoji alphabet
         run: npm run generate-emoji-alphabet -- --check
 
+      - name: Check Worker types
+        run: npm run types:check
+
       - name: Build
         run: npm run build

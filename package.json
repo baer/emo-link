@@ -9,11 +9,15 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "serve out",
+    "start": "wrangler dev",
     "test": "node --experimental-transform-types --test 'src/**/*.test.ts'",
     "lint": "oxlint .",
-    "typecheck": "tsc --noEmit && tsc -p functions --noEmit",
-    "generate-emoji-alphabet": "node ./scripts/generate-emoji-alphabet.mjs"
+    "typecheck": "tsc --noEmit && tsc -p functions --noEmit && tsc -p worker --noEmit",
+    "generate-emoji-alphabet": "node ./scripts/generate-emoji-alphabet.mjs",
+    "build:local": "NEXT_PUBLIC_TURNSTILE_SITE_KEY=1x00000000000000000000AA next build",
+    "types": "wrangler types worker/worker-configuration.d.ts --env-file .dev.vars.example",
+    "types:check": "wrangler types worker/worker-configuration.d.ts --env-file .dev.vars.example --check",
+    "deploy": "npm run build && node scripts/deploy-worker.mjs"
   },
   "engines": {
     "node": ">=24.0.0"
@@ -32,8 +36,8 @@
     "@types/react-dom": "19.3.0",
     "@unicode/unicode-17.0.0": "2.1.0",
     "oxlint": "1.89.0",
-    "serve": "14.2.6",
     "tailwindcss": "4.3.3",
-    "typescript": "7.0.2"
+    "typescript": "7.0.2",
+    "wrangler": "4.152.0"
   }
 }
