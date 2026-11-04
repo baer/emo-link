@@ -12,7 +12,7 @@ import {
   submitWithChallenge,
 } from "../link-client.ts";
 
-import emojiAlphabet from "../emoji-alphabet.json";
+import { emojiAlphabet } from "../emoji-alphabet.ts";
 import SmallUntilHover from "./small-until-hover";
 import joinClasses from "../util/join-classes";
 
