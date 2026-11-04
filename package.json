@@ -26,15 +26,14 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "5.20261026.1",
+    "@tailwindcss/postcss": "4.3.3",
     "@types/node": "24.19.2",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@unicode/unicode-17.0.0": "2.1.0",
-    "autoprefixer": "10.6.1",
     "oxlint": "1.89.0",
-    "postcss": "8.5.31",
     "serve": "14.2.6",
-    "tailwindcss": "3.4.19",
+    "tailwindcss": "4.3.3",
     "typescript": "7.0.2"
   }
 }

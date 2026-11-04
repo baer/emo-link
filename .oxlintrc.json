@@ -20,14 +20,7 @@
     // in Next.js
     "import/no-unassigned-import": "off"
   },
-  // Preserve the existing static page behavior until the UI is updated.
   "overrides": [
-    {
-      "files": ["src/app/layout.tsx"],
-      "rules": {
-        "react/purity": "off"
-      }
-    },
     {
       "files": ["src/app/page.tsx"],
       "rules": {
