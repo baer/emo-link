@@ -1,3 +1,4 @@
+import { isRecord, parseLinkRequestBody, type LinkCreatedResponse } from "../api.ts";
 import { VERIFY_TURNSTILE_TOKEN_ENDPOINT } from "../constants.ts";
 import { normalizeURL } from "../url.ts";
 import { ErrorCodes, errorResponse, jsonResponse } from "./response.ts";
@@ -9,10 +10,6 @@ type CreateLinkContext = {
     TURNSTILE_SECRET?: string;
   };
 };
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null && !Array.isArray(value);
-}
 
 async function validateTurnstileToken(
   secret: string,
@@ -44,31 +41,30 @@ export async function createLink(
     return errorResponse(ErrorCodes.INVALID_URL);
   }
 
-  if (!isRecord(body) || typeof body.url !== "string") {
+  const { url, token } = parseLinkRequestBody(body);
+  if (!url) {
     return errorResponse(ErrorCodes.INVALID_URL);
   }
-  const urlWithProtocol = normalizeURL(body.url);
+  const urlWithProtocol = normalizeURL(url);
   if (!urlWithProtocol) return errorResponse(ErrorCodes.INVALID_URL);
 
   const secret = context.env.TURNSTILE_SECRET;
   if (
     typeof secret !== "string" ||
     !secret.trim() ||
-    typeof body.token !== "string" ||
-    !body.token.trim() ||
-    !(await validateTurnstileToken(secret, body.token))
+    typeof token !== "string" ||
+    !token.trim() ||
+    !(await validateTurnstileToken(secret, token))
   ) {
     return errorResponse(ErrorCodes.INVALID_TURNSTILE_TOKEN);
   }
 
   const uuid = crypto.randomUUID();
   const uuidAsEmoji = encodeUUIDAsEmoji(uuid);
-  const uriEncodedEmojiUUID = encodeURIComponent(uuidAsEmoji);
   const key = `/${uuidAsEmoji}`;
   await context.env.EMO_LINK.put(key, urlWithProtocol);
 
   return jsonResponse({
-    data: { uuid, uuidAsEmoji, uriEncodedEmojiUUID, key },
-    prettyPrint: true,
+    data: { key } satisfies LinkCreatedResponse,
   });
 }

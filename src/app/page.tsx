@@ -2,10 +2,16 @@
 
 import styles from "./page.module.css";
 
-import { useEffect, useState } from "react";
-import { Turnstile } from "@marsidev/react-turnstile";
-import type { WidgetStatus, JSONObject } from "../types";
-import { TURNSTILE_SITEKEYS, CREATE_LINK_ENDPOINT } from "../constants";
+import { useEffect, useRef, useState, type FormEvent } from "react";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
+import type { LinkResponse } from "../api.ts";
+import {
+  getShortLinkDisplayURL,
+  getShortLinkURL,
+  submitLink,
+  submitWithChallenge,
+} from "../link-client.ts";
+
 import emojiAlphabet from "../emoji-alphabet.json";
 import SmallUntilHover from "./small-until-hover";
 import joinClasses from "../util/join-classes";
@@ -17,62 +23,84 @@ function generateRandomNumbers(n: number, min: number, max: number): number[] {
 }
 
 const siteKey =
-  process.env.NODE_ENV === "development"
-    ? // Can be changed to pass, fail, and interactive
-      TURNSTILE_SITEKEYS["pass"]
-    : TURNSTILE_SITEKEYS["production"];
-
-const getEmojiURL = (key: string | null): string | null =>
-  key && typeof window !== "undefined"
-    ? `${window.location.origin}${key}`
-    : null;
+  process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ??
+  (process.env.NODE_ENV === "development"
+    ? "1x00000000000000000000AA"
+    : "0x4AAAAAAADqvMFKDAPy1IkK");
 
 export default function Home() {
   const [randomEmojis, setRandomEmojis] = useState<string[]>([]);
 
-  const [status, setStatus] = useState<WidgetStatus>("unknown");
+  const turnstile = useRef<TurnstileInstance>(null);
+  const submitting = useRef(false);
   const [token, setToken] = useState<string>("");
-  const canSubmit = status === "solved" && token !== "";
   const [userURL, setUserURL] = useState("");
 
-  const [response, setResponse] = useState<JSONObject | null>(null);
+  const [response, setResponse] = useState<LinkResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
-  const emojiURL = getEmojiURL(response?.key as string);
-  // const emojiURL = "https://emol.ink/😻👩🏿‍🤝‍👨🏾👃🏾🛴👩🏾‍🎨🏍️🤷🏻‍♀🧑🏻‍🎨🧹🚚✋🏽";
+  const [copyError, setCopyError] = useState("");
+  const copyOperation = useRef(0);
+  const copyTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const key = response && "key" in response ? response.key : null;
+  const emojiURL = key ? getShortLinkURL(window.location.origin, key) : null;
+  const displayURL = key ? getShortLinkDisplayURL(window.location.origin, key) : null;
 
   useEffect(() => {
     const emojisToGenerate = 20;
     setRandomEmojis(
-      generateRandomNumbers(emojisToGenerate, 0, emojiAlphabet.length).map(
+      generateRandomNumbers(emojisToGenerate, 0, emojiAlphabet.length - 1).map(
         (randomNumber) => emojiAlphabet[randomNumber]
       )
     );
   }, []);
 
-  async function handleSubmitURL() {
+  useEffect(() => () => {
+    copyOperation.current++;
+    clearTimeout(copyTimer.current);
+  }, []);
+
+  async function handleSubmitURL(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!token || submitting.current) return;
+    submitting.current = true;
     setLoading(true);
     setResponse(null);
-
-    const res = await fetch(CREATE_LINK_ENDPOINT, {
-      method: "POST",
-      body: JSON.stringify({ token, url: userURL }),
-      headers: { "content-type": "application/json" },
-    });
-
-    const data = await res.json();
-
-    setLoading(false);
-    setResponse(data);
+    copyOperation.current++;
+    setCopyError("");
+    setIsCopied(false);
+    clearTimeout(copyTimer.current);
+    try {
+      const result = await submitWithChallenge(
+        () => submitLink(userURL, token),
+        () => {
+          setToken("");
+          turnstile.current?.reset();
+        }
+      );
+      setResponse(result);
+    } finally {
+      submitting.current = false;
+      setLoading(false);
+    }
   }
 
-  function handleClickLink() {
-    navigator.clipboard.writeText(emojiURL ?? "");
-    setIsCopied(true);
-
-    setTimeout(() => {
+  async function handleClickLink() {
+    if (!emojiURL) return;
+    const operation = ++copyOperation.current;
+    setCopyError("");
+    setIsCopied(false);
+    try {
+      await navigator.clipboard.writeText(emojiURL);
+      if (operation !== copyOperation.current) return;
+      setIsCopied(true);
+      clearTimeout(copyTimer.current);
+      copyTimer.current = setTimeout(() => setIsCopied(false), 4000);
+    } catch {
+      if (operation !== copyOperation.current) return;
       setIsCopied(false);
-    }, 4000);
+      setCopyError("Unable to copy the link. Please copy the displayed URL.");
+    }
   }
 
   return (
@@ -91,23 +119,34 @@ export default function Home() {
       >
         Copied to Clipboard!
       </div>
-      <div
-        className={joinClasses([
-          styles["short-url"],
-          "mb-2",
-          "md:mb-10",
-          "w-full",
-          "no-underline",
-          "text-center",
-          "font-bold",
-          "text-base",
-          "md:text-2xl",
-          "lg:text-4xl",
-        ])}
-        onClick={handleClickLink}
-      >
-        {emojiURL}
-      </div>
+      <output className="block" aria-live="polite">{copyError}</output>
+      {response && "message" in response ? (
+        <output className="mb-2 block w-full text-center" aria-live="polite">
+          {response.message}
+        </output>
+      ) : (
+        <button
+          type="button"
+          aria-label="Copy shortened URL"
+          disabled={!emojiURL}
+          className={joinClasses([
+            styles["short-url"],
+            "border-0 bg-transparent cursor-pointer",
+            "mb-2",
+            "md:mb-10",
+            "w-full",
+            "no-underline",
+            "text-center",
+            "font-bold",
+            "text-base",
+            "md:text-2xl",
+            "lg:text-4xl",
+          ])}
+          onClick={() => void handleClickLink()}
+        >
+          {displayURL}
+        </button>
+      )}
 
       <section
         className={joinClasses([
@@ -133,7 +172,8 @@ export default function Home() {
           </p>
         </div>
 
-        <div
+        <form
+          onSubmit={(event) => void handleSubmitURL(event)}
           className={joinClasses([
             "flex",
             "flex-col",
@@ -159,7 +199,9 @@ export default function Home() {
               </label>
               <input
                 required
-                type="url"
+                type="text"
+                inputMode="url"
+                autoComplete="url"
                 id="url"
                 name="url"
                 placeholder="https://ericbaer.com/"
@@ -197,22 +239,20 @@ export default function Home() {
               Anti 🤖 Check
             </label>
             <Turnstile
+              ref={turnstile}
               aria-describedby="turnstile-label"
               options={{ appearance: "interaction-only" }}
               siteKey={siteKey}
-              onError={() => setStatus("error")}
-              onExpire={() => setStatus("expired")}
-              onSuccess={(token) => {
-                setToken(token);
-                setStatus("solved");
-              }}
+              onError={() => setToken("")}
+              onExpire={() => setToken("")}
+              onSuccess={setToken}
             />
           </div>
 
           <button
             aria-label="Shorten URL"
-            onClick={handleSubmitURL}
-            disabled={!canSubmit || loading}
+            type="submit"
+            disabled={!token || loading}
             className={joinClasses([
               styles["hero__form-submit-button"],
               "w-full",
@@ -228,7 +268,7 @@ export default function Home() {
           >
             Submit
           </button>
-        </div>
+        </form>
       </section>
 
       <article
