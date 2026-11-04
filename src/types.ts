@@ -1,4 +1,4 @@
-import { secretOptions } from "./constants";
+import type { secretOptions } from "./constants";
 
 export type SecretKeyType = (typeof secretOptions)[number]["value"];
 

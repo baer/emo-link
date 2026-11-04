@@ -1,0 +1,44 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "typescript",
+    "unicorn",
+    "oxc",
+    "react",
+    "react-hooks",
+    "jsx-a11y",
+    "import"
+  ],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn"
+  },
+  "rules": {
+    // React 19 with the automatic JSX runtime doesn't need React in scope
+    "react/react-in-jsx-scope": "off",
+    // CSS side-effect imports (e.g. `import "./globals.css"`) are idiomatic
+    // in Next.js
+    "import/no-unassigned-import": "off"
+  },
+  // Preserve the existing static page behavior until the UI is updated.
+  "overrides": [
+    {
+      "files": ["src/app/layout.tsx"],
+      "rules": {
+        "react/purity": "off"
+      }
+    },
+    {
+      "files": ["src/app/page.tsx"],
+      "rules": {
+        "react/set-state-in-effect": "off",
+        "jsx-a11y/click-events-have-key-events": "off",
+        "jsx-a11y/no-static-element-interactions": "off"
+      }
+    }
+  ],
+  "env": {
+    "builtin": true,
+    "browser": true
+  }
+}
